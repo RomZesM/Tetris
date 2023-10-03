@@ -7,6 +7,7 @@ const button4 = document.querySelector(".but4")
 let timerId = 0;
 const field = document.querySelectorAll('.glass div');
 let width = 10;
+let speed = 250;
 
 button1.addEventListener("click", (e)=>{
 	moveLeft();
@@ -28,7 +29,7 @@ button4.addEventListener("click", (e)=>{
 	startGame()
 
 });
-//!del
+//!del after all
 function setFieldCoordinate(){
 	for (let i = 0; i < field.length; i++) {
 		const element = field[i];
@@ -62,7 +63,7 @@ function clearDetail(){
 }
 
 function startGame(){
-	timerId = setInterval(moveDown, 250);
+	timerId = setInterval(moveDown, speed);
 }
 
 
@@ -83,6 +84,9 @@ function stopDetail(){
 		currentDetail = l_detail;
 		//restart the position
 		currentPosition = 4;
+		
+		changeSpeed(250);
+		
 		draw();
 	
 	}
@@ -121,7 +125,25 @@ function moveRight(){
 	 draw()
 }
 
-	
+//check what key was pressed and do action
+function controlList(event){
+	if(event.keyCode === 37	){
+		moveLeft();
+	}
+	else if(event.keyCode === 39){
+		moveRight();
+	}
+	else if(event.keyCode === 40){
+		changeSpeed(20)
+	}
+}
+//add event listener to catch all keyUp
+document.addEventListener('keyup', controlList);
 
 
+function changeSpeed(newSpeed){
+	clearInterval(timerId);
+	speed = newSpeed;
+	startGame()
+}
 
