@@ -1,17 +1,36 @@
+import { setFieldCoordinate } from "./utils.js";
+import { details } from "./details.js";
+
+
 console.log("Hello world!");
 
 const button1 = document.querySelector(".but1")
 const button2 = document.querySelector(".but2")
 const button3 = document.querySelector(".but3")
 const button4 = document.querySelector(".but4")
+//
+export const field = document.querySelectorAll('.glass div');
 let timerId = 0;
-const field = document.querySelectorAll('.glass div');
-let width = 10;
-let speed = 250;
+
+
+let baseSpeed = 1000;
+let currentSpeed = baseSpeed;
+let currentPosition = 4;
+let rotatePosition = 0;
+let currentDetailPack = details[randomNumOfDetail()]
+let currentDetail = currentDetailPack[rotatePosition];
+
+
+//Global variables in index.html
+//width = 10;
+
+
+setFieldCoordinate();
+console.log(currentDetail);
 
 button1.addEventListener("click", (e)=>{
-	moveLeft();
-	
+	//moveLeft();
+	testdraw()
 	
 });
 
@@ -29,25 +48,7 @@ button4.addEventListener("click", (e)=>{
 	startGame()
 
 });
-//!del after all
-function setFieldCoordinate(){
-	for (let i = 0; i < field.length; i++) {
-		const element = field[i];
-		element.innerHTML = `${i}`;		
-	}
-}
-setFieldCoordinate();
 
-
-
-
-
-let l_detail = [1, 2, width + 1, width * 2 + 1];
-
-let currentPosition = 4;
-let currentDetail = l_detail;
-
-console.log(currentDetail);
 
 function draw(){
 	for (let i = 0; i < currentDetail.length; i++) {
@@ -56,6 +57,16 @@ function draw(){
 	}
 }
 
+// function testdraw(){
+// 	let testDet = [width, width + 1,  width + 2, width + 3];
+	
+// 	for (let i = 0; i < testDet.length; i++) {
+// 		const element = testDet[i];
+// 		field[element].classList.add("detail")
+// 	}
+// }
+
+
 function clearDetail(){
 	currentDetail.forEach(element => {
 		field[currentPosition + element].classList.remove("detail")
@@ -63,7 +74,7 @@ function clearDetail(){
 }
 
 function startGame(){
-	timerId = setInterval(moveDown, speed);
+	timerId = setInterval(moveDown, currentSpeed);
 }
 
 
@@ -80,12 +91,14 @@ function stopDetail(){
 		currentDetail.forEach(element => { //draw figure on field with class ground
 			field[currentPosition + element].classList.add("ground")
 		});
-		//create new random detail	
-		currentDetail = l_detail;
+		//create new random detail	//todo
+		currentDetailPack = details[randomNumOfDetail()];
+		rotatePosition = 0;
+		currentDetail = currentDetailPack[rotatePosition];
 		//restart the position
 		currentPosition = 4;
 		
-		changeSpeed(250);
+		changeSpeed(baseSpeed);
 		
 		draw();
 	
@@ -125,6 +138,17 @@ function moveRight(){
 	 draw()
 }
 
+function rotate(){
+	clearDetail()
+	if(rotatePosition === 3){
+		rotatePosition = 0;
+	}
+	else
+		rotatePosition++;
+	currentDetail = currentDetailPack[rotatePosition];
+	draw();
+}
+
 //check what key was pressed and do action
 function controlList(event){
 	if(event.keyCode === 37	){
@@ -133,6 +157,11 @@ function controlList(event){
 	else if(event.keyCode === 39){
 		moveRight();
 	}
+	else if(event.keyCode === 38){
+		rotate();
+	}
+
+	
 	else if(event.keyCode === 40){
 		changeSpeed(20)
 	}
@@ -143,7 +172,13 @@ document.addEventListener('keyup', controlList);
 
 function changeSpeed(newSpeed){
 	clearInterval(timerId);
-	speed = newSpeed;
+	currentSpeed = newSpeed;
 	startGame()
 }
 
+
+function randomNumOfDetail(){
+	let randomNum = Math.floor(Math.random() * details.length)
+	console.log("random", randomNum);
+	return  randomNum;
+}
