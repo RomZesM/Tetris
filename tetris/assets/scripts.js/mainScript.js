@@ -9,9 +9,12 @@ const button2 = document.querySelector(".but2")
 const button3 = document.querySelector(".but3")
 const button4 = document.querySelector(".but4")
 //
-export const field = document.querySelectorAll('.glass div');
-let timerId = 0;
+const glass = document.querySelector(".glass")
+export let field = Array.from(document.querySelectorAll('.glass div'));
 
+console.log(Array.isArray(field));
+
+let timerId = 0;
 
 let baseSpeed = 1000;
 let currentSpeed = baseSpeed;
@@ -91,6 +94,9 @@ function stopDetail(){
 		currentDetail.forEach(element => { //draw figure on field with class ground
 			field[currentPosition + element].classList.add("ground")
 		});
+		//check full row
+		checkFullRow();
+
 		//create new random detail	//todo
 		currentDetailPack = details[randomNumOfDetail()];
 		rotatePosition = 0;
@@ -179,6 +185,31 @@ function changeSpeed(newSpeed){
 
 function randomNumOfDetail(){
 	let randomNum = Math.floor(Math.random() * details.length)
-	console.log("random", randomNum);
+	//console.log("random", randomNum); //!del
 	return  randomNum;
+}
+
+function checkFullRow(){
+	for(let i = 0; i < field.length-10; i+=width){
+		let row = [i, i+1, i+2, i+3, i+4, i+5, i+6, i+7, i+8,i+9]
+		//check all row in fild for ground
+		if(row.every(index => field[index].classList.contains('ground'))){
+			
+			clearRow(row);
+			let splicedRow = field.splice(i, width);//slice row which was filled
+			field = splicedRow.concat(field)//move row on top of glass
+			field.forEach(cell => glass.appendChild(cell));//insert all new cell into glass
+		
+		}	
+		
+	}
+	
+}
+
+//remove classes detail or ground from cell in glass
+function clearRow(row){
+	row.forEach((element)=>{
+		field[element].classList.remove("ground");
+		field[element].classList.remove("detail");
+	});
 }
