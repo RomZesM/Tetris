@@ -1,32 +1,28 @@
 import { setFieldCoordinate } from "./utils.js";
 import { details } from "./details.js";
 
-
-console.log("Hello world!");
-
 const button1 = document.querySelector(".but1")
 const button2 = document.querySelector(".but2")
 const button3 = document.querySelector(".but3")
 const button4 = document.querySelector(".but4")
 //
 const glass = document.querySelector(".glass")
+const scoreField = document.querySelector(".score")
 export let field = Array.from(document.querySelectorAll('.glass div'));
 
-console.log(Array.isArray(field));
 
 let timerId = 0;
-
-let baseSpeed = 1000;
+let baseSpeed = 500;
 let currentSpeed = baseSpeed;
 let currentPosition = 4;
 let rotatePosition = 0;
 let currentDetailPack = details[randomNumOfDetail()]
 let currentDetail = currentDetailPack[rotatePosition];
+let score = 0;
 
 
 //Global variables in index.html
 //width = 10;
-
 
 setFieldCoordinate();
 console.log(currentDetail);
@@ -60,14 +56,17 @@ function draw(){
 	}
 }
 
-// function testdraw(){
-// 	let testDet = [width, width + 1,  width + 2, width + 3];
+//////////////
+
+// function testdraw(det){
+// 	let testDet = det[3];
 	
 // 	for (let i = 0; i < testDet.length; i++) {
 // 		const element = testDet[i];
 // 		field[element].classList.add("detail")
 // 	}
 // }
+// testdraw(stick_detail)
 
 
 function clearDetail(){
@@ -82,10 +81,13 @@ function startGame(){
 
 
 function moveDown(){
+	stopDetail();
 	clearDetail();
 	currentPosition += width; //add widh to every number, and make it move down
 	draw();
 	stopDetail();
+	//
+	
 }
 
 function stopDetail(){
@@ -97,7 +99,8 @@ function stopDetail(){
 		//check full row
 		checkFullRow();
 
-		//create new random detail	//todo
+		
+		//create new random detail
 		currentDetailPack = details[randomNumOfDetail()];
 		rotatePosition = 0;
 		currentDetail = currentDetailPack[rotatePosition];
@@ -107,6 +110,7 @@ function stopDetail(){
 		changeSpeed(baseSpeed);
 		
 		draw();
+		gameOver();
 	
 	}
 
@@ -114,45 +118,83 @@ function stopDetail(){
 
 function moveLeft(){
 	clearDetail();
-	//check if some part of detail is on the left edge of the glass (10, 20, 30 etc)
-	if(currentDetail.some(element => (currentPosition + element + width) % width === 0)){
-		currentPosition++;
-		console.log(" left edge");
+	if(!isAtLeftEgde(currentDetail)){
+		currentPosition--;
 	}
-	currentPosition--;
-	
-	if(currentDetail.some(element => field[currentPosition + element].classList.contains('ground'))){
+	if(isAnoterDetailAtLeft(currentDetail)){
 		currentPosition++;
-		console.log("ground on the left");
-	 }
-	 draw()
+	}
+	draw()
+}
 
-}	
 
 function moveRight(){
-	clearDetail();
-	//check if some part of detail is on the right edge of the glass (10, 20, 30 etc)
-	if(currentDetail.some(element => (currentPosition + element + 1) % width === 0)){
-		currentPosition--;
-		console.log("rigth edge");
+	clearDetail()
+	if(!isAtRigthEdge(currentDetail)){
+		currentPosition++;
 	}
-	currentPosition++;
-	 if(currentDetail.some(element => field[currentPosition + element].classList.contains('ground'))){
+	if(isAnotherDetailAtRight(currentDetail)){
 		currentPosition--;
-		console.log("ground on the right");
-	 }
-	 draw()
+	}
+	draw()
 }
 
 function rotate(){
-	clearDetail()
-	if(rotatePosition === 3){
-		rotatePosition = 0;
+	
+	if(checkRotation()){
+		clearDetail()
+		if(rotatePosition === 3){
+			rotatePosition = 0;
+		}
+		else
+			rotatePosition++;
+		currentDetail = currentDetailPack[rotatePosition];
+
+		//checkRotation();
+
+		draw();
+	}
+
+}
+
+function checkRotation(){
+	//create a copy of detail to check future possible position
+	let rotationPosStub = rotatePosition;
+	let currentDetailStub = currentDetail;
+	
+	if(rotationPosStub === 3){
+		rotationPosStub = 0;
 	}
 	else
-		rotatePosition++;
-	currentDetail = currentDetailPack[rotatePosition];
-	draw();
+		rotationPosStub++;
+
+	
+	 currentDetailStub = currentDetailPack[rotationPosStub];
+	//check if two detail doesn't have common square and doest take two edges simultaneusly
+	 if((isAnoterDetailAtLeft(currentDetailStub) || isAnotherDetailAtRight(currentDetailStub)) ||
+	 (isAtLeftEgde(currentDetailStub) && isAtRigthEdge(currentDetailStub))){
+		console.log("forbid rotate");
+		return false;
+	 }
+	 else return true;
+
+
+}
+
+function isAtRigthEdge(detail){
+	return detail.some(element => (currentPosition + element + 1) % width === 0)
+}
+
+function isAnotherDetailAtRight(detail){
+	return detail.some(element => field[currentPosition + element].classList.contains('ground')) //todo call checkCurrentDetailforSome
+}
+
+function isAtLeftEgde(detail){
+	return detail.some(element => (currentPosition + element) % width === 0)
+}
+
+function isAnoterDetailAtLeft(detail){
+	return detail.some(element => field[currentPosition + element].classList.contains('ground')) //todo call checkCurrentDetailforSome
 }
 
 //check what key was pressed and do action
@@ -196,6 +238,8 @@ function checkFullRow(){
 		if(row.every(index => field[index].classList.contains('ground'))){
 			
 			clearRow(row);
+			addScore();
+			
 			let splicedRow = field.splice(i, width);//slice row which was filled
 			field = splicedRow.concat(field)//move row on top of glass
 			field.forEach(cell => glass.appendChild(cell));//insert all new cell into glass
@@ -212,4 +256,22 @@ function clearRow(row){
 		field[element].classList.remove("ground");
 		field[element].classList.remove("detail");
 	});
+}
+
+function addScore(){
+	score += 10;
+	scoreField.innerHTML = score;
+}
+
+function gameOver(){	
+	if(checkCurrentDetailforSome("ground")){
+		clearInterval(timerId);
+		console.log("finish");
+	}
+		
+	
+}
+
+function checkCurrentDetailforSome(checkClass){
+	return currentDetail.some(element => field[currentPosition + element].classList.contains(checkClass))
 }
