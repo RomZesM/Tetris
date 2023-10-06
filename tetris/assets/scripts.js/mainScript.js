@@ -121,7 +121,7 @@ function moveLeft(){
 	if(!isAtLeftEgde(currentDetail)){
 		currentPosition--;
 	}
-	if(isAnoterDetailAtLeft(currentDetail)){
+	if(isCurrentDetailGetOccupiedPlace(currentDetail)){
 		currentPosition++;
 	}
 	draw()
@@ -133,7 +133,7 @@ function moveRight(){
 	if(!isAtRigthEdge(currentDetail)){
 		currentPosition++;
 	}
-	if(isAnotherDetailAtRight(currentDetail)){
+	if(isCurrentDetailGetOccupiedPlace(currentDetail)){
 		currentPosition--;
 	}
 	draw()
@@ -171,7 +171,8 @@ function checkRotation(){
 	
 	 currentDetailStub = currentDetailPack[rotationPosStub];
 	//check if two detail doesn't have common square and doest take two edges simultaneusly
-	 if((isAnoterDetailAtLeft(currentDetailStub) || isAnotherDetailAtRight(currentDetailStub)) ||
+
+	 if(isCurrentDetailGetOccupiedPlace(currentDetailStub) ||
 	 (isAtLeftEgde(currentDetailStub) && isAtRigthEdge(currentDetailStub))){
 		console.log("forbid rotate");
 		return false;
@@ -185,17 +186,11 @@ function isAtRigthEdge(detail){
 	return detail.some(element => (currentPosition + element + 1) % width === 0)
 }
 
-function isAnotherDetailAtRight(detail){
-	return detail.some(element => field[currentPosition + element].classList.contains('ground')) //todo call checkCurrentDetailforSome
-}
-
 function isAtLeftEgde(detail){
 	return detail.some(element => (currentPosition + element) % width === 0)
 }
 
-function isAnoterDetailAtLeft(detail){
-	return detail.some(element => field[currentPosition + element].classList.contains('ground')) //todo call checkCurrentDetailforSome
-}
+
 
 //check what key was pressed and do action
 function controlList(event){
@@ -264,7 +259,7 @@ function addScore(){
 }
 
 function gameOver(){	
-	if(checkCurrentDetailforSome("ground")){
+	if(isCurrentDetailGetOccupiedPlace(currentDetail)){
 		clearInterval(timerId);
 		console.log("finish");
 	}
@@ -272,6 +267,6 @@ function gameOver(){
 	
 }
 
-function checkCurrentDetailforSome(checkClass){
-	return currentDetail.some(element => field[currentPosition + element].classList.contains(checkClass))
+function isCurrentDetailGetOccupiedPlace(detail){
+	return detail.some(element => field[currentPosition + element].classList.contains('ground'));
 }
