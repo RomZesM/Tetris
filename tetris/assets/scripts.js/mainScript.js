@@ -25,18 +25,25 @@ let score = 0;
 //width = 10;
 
 setFieldCoordinate();
-console.log(currentDetail);
+
+let isPaused = false;
 
 button1.addEventListener("click", (e)=>{
 	//moveLeft();
-	testdraw()
+	//testdraw()
+	//(e).preventDefault();
+	isPaused = true;
 	
 });
 
 button2.addEventListener("click", (e)=>{
-	moveRight()
+	//(e).preventDefault();
+	isPaused = false;
 
 });
+
+
+
 
 button3.addEventListener("click", (e)=>{
 	clearInterval(timerId);
@@ -81,25 +88,36 @@ function startGame(){
 
 
 function moveDown(){
-	stopDetail();
-	clearDetail();
-	currentPosition += width; //add widh to every number, and make it move down
-	draw();
-	stopDetail();
-	//
+	if(!isPaused){
+		stopDetail();
+			clearDetail();
+			currentPosition += width; //add widh to every number, and make it move down
+			draw();
+			stopDetail();
+			//
+	}
+	
 	
 }
+
+setTimeout(()=>{console.log("timeout"), 3000})
 
 function stopDetail(){
 	//check 1 square under detail if it "ground"
 	if(currentDetail.some(index => field[currentPosition + index + width].classList.contains('ground'))){
-		currentDetail.forEach(element => { //draw figure on field with class ground
-			field[currentPosition + element].classList.add("ground")
-		});
-		//check full row
-		checkFullRow();
+		isPaused = true;
+		setTimeout(function(){ //pause before new detail to make move current detail on "ground"
+			makeDetailUnmovable();
+		}, currentSpeed);//add class GROUND to detail to stop it
+	}
 
-		
+}	
+function makeDetailUnmovable(){
+	console.log("make unmovable");
+	currentDetail.forEach(element => { //draw figure on field with class ground
+		field[currentPosition + element].classList.add("ground")
+	});
+		checkFullRow();		
 		//create new random detail
 		currentDetailPack = details[randomNumOfDetail()];
 		rotatePosition = 0;
@@ -111,10 +129,12 @@ function stopDetail(){
 		
 		draw();
 		gameOver();
-	
-	}
+		isPaused = false;
+}
 
-}	
+function sleep(ms) {
+	return new Promise(resolve => setTimeout(resolve, ms));
+  }
 
 function moveLeft(){
 	clearDetail();
@@ -146,12 +166,9 @@ function rotate(){
 		if(rotatePosition === 3){
 			rotatePosition = 0;
 		}
-		else
-			rotatePosition++;
+		else{rotatePosition++;};
+			
 		currentDetail = currentDetailPack[rotatePosition];
-
-		//checkRotation();
-
 		draw();
 	}
 
@@ -165,10 +182,9 @@ function checkRotation(){
 	if(rotationPosStub === 3){
 		rotationPosStub = 0;
 	}
-	else
+	else{
 		rotationPosStub++;
-
-	
+	}	
 	 currentDetailStub = currentDetailPack[rotationPosStub];
 	//check if two detail doesn't have common square and doest take two edges simultaneusly
 
