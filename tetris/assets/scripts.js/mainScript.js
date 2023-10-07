@@ -1,5 +1,7 @@
-import { setFieldCoordinate } from "./utils.js";
+import { setFieldCoordinate, setScoreInScoreTableLocalstorage, showScoreTable } from "./utils.js";
 import { details } from "./details.js";
+import { createScoreTableInLocalStorage } from "./utils.js";
+
 
 const button1 = document.querySelector(".but1")
 const button2 = document.querySelector(".but2")
@@ -25,6 +27,8 @@ let score = 0;
 //width = 10;
 
 setFieldCoordinate();
+createScoreTableInLocalStorage()
+showScoreTable();
 
 let isPaused = false;
 
@@ -32,7 +36,9 @@ button1.addEventListener("click", (e)=>{
 	//moveLeft();
 	//testdraw()
 	//(e).preventDefault();
-	isPaused = true;
+	//isPaused = true;
+	setScoreInScoreTableLocalstorage(score);
+	showScoreTable();
 	
 });
 
@@ -100,7 +106,7 @@ function moveDown(){
 	
 }
 
-setTimeout(()=>{console.log("timeout"), 3000})
+
 
 function stopDetail(){
 	//check 1 square under detail if it "ground"
@@ -218,9 +224,7 @@ function controlList(event){
 	}
 	else if(event.keyCode === 38){
 		rotate();
-	}
-
-	
+	}	
 	else if(event.keyCode === 40){
 		changeSpeed(20)
 	}
@@ -276,13 +280,23 @@ function addScore(){
 
 function gameOver(){	
 	if(isCurrentDetailGetOccupiedPlace(currentDetail)){
+		
 		clearInterval(timerId);
+		timerId = null;
+		currentDetail.forEach(element => { //draw figure on field with class ground
+			field[currentPosition + element].classList.add("ground")
+		});
+		setScoreInScoreTableLocalstorage(score)
+		showScoreTable();
+		isPaused = true;
 		console.log("finish");
 	}
-		
-	
 }
 
 function isCurrentDetailGetOccupiedPlace(detail){
 	return detail.some(element => field[currentPosition + element].classList.contains('ground'));
 }
+
+
+//
+
