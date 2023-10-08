@@ -14,6 +14,8 @@ export let field = Array.from(document.querySelectorAll('.glass div'));
 
 let setTimeOutID = 0;
 let timerId = 0;
+let moveHorisontalLeftId = 0;
+let moveHorisontalRightId = 0;
 let baseSpeed = 500;
 let currentSpeed = baseSpeed;
 let currentPosition = 4;
@@ -213,10 +215,15 @@ function checkRotation(){
 //check what key was pressed and do action
 function controlList(event){
 	if(event.keyCode === 37	){
-		moveLeft();
+		//moveLeft();
+		clearInterval(moveHorisontalLeftId);
+		moveHorisontalLeftId = null;
 	}
 	else if(event.keyCode === 39){
-		moveRight();
+		//moveRight();
+		clearInterval(moveHorisontalRightId);
+		moveHorisontalRightId = null;
+		
 	}
 	else if(event.keyCode === 38){
 		rotate();
@@ -227,7 +234,21 @@ function controlList(event){
 }
 
 function changeSpeedButtonController(event){
-	
+	if(event.keyCode === 37	){
+		moveLeft();
+		if(moveHorisontalLeftId === null){ //preventing multiply SETINTERVAl
+			moveHorisontalLeftId = setInterval(moveLeft, 150);
+		}
+		
+	}
+	else if(event.keyCode === 39){
+		moveRight();
+		if(moveHorisontalRightId === null){//preventing multiply SETINTERVAl
+			moveHorisontalRightId = setInterval(moveRight, 150);
+		}
+		
+	}
+
 	if(event.keyCode === 40){
 		console.log("keyDown")
 		changeSpeed(40)
