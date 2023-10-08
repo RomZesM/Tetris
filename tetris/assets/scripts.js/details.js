@@ -39,3 +39,11 @@ const stick_detail =	[[width * 2, width * 2 + 1,  width * 2 + 2, width * 2 + 3],
 							[2, width + 2,  width * 2 + 2, width * 3 + 2]];	
 
 export const details = [ll_detail, lr_detail, zl_detail, zr_detail, t_detail, cube_detail, stick_detail];
+
+//!del
+// function makeDetailUngroundAfterRotation(){
+	
+// 	currentDetail.forEach(element => { //draw figure on field with class ground
+// 		field[currentPosition + element].classList.remove("ground")
+// 	});
+// }

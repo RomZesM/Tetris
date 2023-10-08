@@ -12,10 +12,12 @@ const glass = document.querySelector(".glass")
 const scoreField = document.querySelector(".score")
 export let field = Array.from(document.querySelectorAll('.glass div'));
 
-let setTimeOutID = 0;
-let timerId = 0;
-let moveHorisontalLeftId = 0;
-let moveHorisontalRightId = 0;
+let setTimeOutID = 0;			//to stop setTimeOut for completing stopDetail Function
+let timerId = 0;             //to stop setInterval for moveDown()
+let moveHorisontalLeftId = 0; //to stop setinterval fot move left, while pressing key
+let moveHorisontalRightId = 0;//to stop setinterval fot move left, while pressing key
+let isNewDetailAppear = false; //to stop automoving down after new detail appear while pressing down key
+
 let baseSpeed = 500;
 let currentSpeed = baseSpeed;
 let currentPosition = 4;
@@ -140,6 +142,7 @@ function makeDetailUnmovable(){
 		changeSpeed(baseSpeed);
 		
 		draw();
+		isNewDetailAppear = true; //to prevent fast falling down after new detail wad appear
 		gameOver();
 		isPaused = false;
 	}
@@ -149,19 +152,12 @@ function makeDetailUnmovable(){
 	
 	
 }
-//!del
-// function makeDetailUngroundAfterRotation(){
-	
-// 	currentDetail.forEach(element => { //draw figure on field with class ground
-// 		field[currentPosition + element].classList.remove("ground")
-// 	});
-// }
+
 
 function rotate(){
 	if(checkRotation()){
 		
 		clearDetail()
-		
 			if(rotatePosition === 3){
 				rotatePosition = 0;
 			}
@@ -170,7 +166,6 @@ function rotate(){
 			currentDetail = currentDetailPack[rotatePosition];
 			
 			draw();
-		
 		
 		//check if there a free squares under detail after rotation and unpause
 		if(!checkGround(currentDetail) && isPaused){
@@ -210,9 +205,7 @@ function checkRotation(){
 
 }
 
-
-
-//check what key was pressed and do action
+//check what key was pressed and do action shoot when RELEASE key
 function controlList(event){
 	if(event.keyCode === 37	){
 		//moveLeft();
@@ -230,9 +223,10 @@ function controlList(event){
 	}	
 	else if(event.keyCode === 40){
 		changeSpeed(baseSpeed)
+		isNewDetailAppear = false;
 	}
 }
-
+//check what key was pressed and do action, shoot when PRESS key
 function changeSpeedButtonController(event){
 	if(event.keyCode === 37	){
 		moveLeft();
@@ -250,8 +244,12 @@ function changeSpeedButtonController(event){
 	}
 
 	if(event.keyCode === 40){
-		console.log("keyDown")
-		changeSpeed(40)
+		
+		if(!isNewDetailAppear){
+			console.log("keyDown")
+			changeSpeed(40)
+		}
+		
 	}
 }
 //add event listener to catch all keyUp
@@ -260,6 +258,7 @@ document.addEventListener('keyup', controlList);
 document.addEventListener('keydown', changeSpeedButtonController);
 
 function changeSpeed(newSpeed){
+	console.log("set speed: ", newSpeed);
 	clearInterval(timerId);
 	currentSpeed = newSpeed;
 	startGame()
@@ -355,7 +354,7 @@ function moveLeft(){
 		clearTimeout(setTimeOutID);
 		setTimeOutID = null;
 		isPaused = false;
-		console.log("move left - ", setTimeOutID, isPaused);
+		
 	}
 }
 
