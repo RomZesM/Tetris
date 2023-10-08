@@ -12,7 +12,7 @@ const glass = document.querySelector(".glass")
 const scoreField = document.querySelector(".score")
 export let field = Array.from(document.querySelectorAll('.glass div'));
 
-
+let setTimeOutID = 0;
 let timerId = 0;
 let baseSpeed = 500;
 let currentSpeed = baseSpeed;
@@ -36,7 +36,7 @@ button1.addEventListener("click", (e)=>{
 	//moveLeft();
 	//testdraw()
 	//(e).preventDefault();
-	//isPaused = true;
+
 	setScoreInScoreTableLocalstorage(score);
 	showScoreTable();
 	
@@ -94,8 +94,8 @@ function startGame(){
 
 
 function moveDown(){
-	if(!isPaused){
-		stopDetail();
+	if(!isPaused && !checkGround(currentDetail)){ //chek ground under detail to prevent moving just after rotetion
+		    stopDetail();
 			clearDetail();
 			currentPosition += width; //add widh to every number, and make it move down
 			draw();
@@ -110,19 +110,21 @@ function moveDown(){
 
 function stopDetail(){
 	//check 1 square under detail if it "ground"
-	if(currentDetail.some(index => field[currentPosition + index + width].classList.contains('ground'))){
+	if(checkGround(currentDetail)){
 		isPaused = true;
-		setTimeout(function(){ //pause before new detail to make move current detail on "ground"
+		setTimeOutID = setTimeout(function(){ //pause before new detail to make move current detail on "ground"
 			makeDetailUnmovable();
-		}, currentSpeed);//add class GROUND to detail to stop it
+		}, 1000);//add class GROUND to detail to stop it (currentSpeed / 1.4)
+		
 	}
 
 }	
 function makeDetailUnmovable(){
-	console.log("make unmovable");
-	currentDetail.forEach(element => { //draw figure on field with class ground
+	if(isPaused && checkGround(currentDetail)){
+		//console.log("make unmovable", currentPosition);
+		currentDetail.forEach(element => { //draw figure on field with class ground
 		field[currentPosition + element].classList.add("ground")
-	});
+		});
 		checkFullRow();		
 		//create new random detail
 		currentDetailPack = details[randomNumOfDetail()];
@@ -136,46 +138,46 @@ function makeDetailUnmovable(){
 		draw();
 		gameOver();
 		isPaused = false;
+	}
+	else{
+		isPaused = false;
+	}
+	
+	
 }
-
-function sleep(ms) {
-	return new Promise(resolve => setTimeout(resolve, ms));
-  }
-
-function moveLeft(){
-	clearDetail();
-	if(!isAtLeftEgde(currentDetail)){
-		currentPosition--;
-	}
-	if(isCurrentDetailGetOccupiedPlace(currentDetail)){
-		currentPosition++;
-	}
-	draw()
-}
-
-
-function moveRight(){
-	clearDetail()
-	if(!isAtRigthEdge(currentDetail)){
-		currentPosition++;
-	}
-	if(isCurrentDetailGetOccupiedPlace(currentDetail)){
-		currentPosition--;
-	}
-	draw()
-}
+//!del
+// function makeDetailUngroundAfterRotation(){
+	
+// 	currentDetail.forEach(element => { //draw figure on field with class ground
+// 		field[currentPosition + element].classList.remove("ground")
+// 	});
+// }
 
 function rotate(){
-	
 	if(checkRotation()){
+		
 		clearDetail()
-		if(rotatePosition === 3){
-			rotatePosition = 0;
-		}
-		else{rotatePosition++;};
+		
+			if(rotatePosition === 3){
+				rotatePosition = 0;
+			}
+			else{rotatePosition++;};
+				
+			currentDetail = currentDetailPack[rotatePosition];
 			
-		currentDetail = currentDetailPack[rotatePosition];
-		draw();
+			draw();
+		
+		
+		//check if there a free squares under detail after rotation and unpause
+		if(!checkGround(currentDetail) && isPaused){
+			
+			clearTimeout(setTimeOutID);
+			setTimeOutID = null;
+			isPaused = false;
+			
+		}
+		
+		
 	}
 
 }
@@ -196,20 +198,12 @@ function checkRotation(){
 
 	 if(isCurrentDetailGetOccupiedPlace(currentDetailStub) ||
 	 (isAtLeftEgde(currentDetailStub) && isAtRigthEdge(currentDetailStub))){
-		console.log("forbid rotate");
+		//console.log("forbid rotate");
 		return false;
 	 }
 	 else return true;
 
 
-}
-
-function isAtRigthEdge(detail){
-	return detail.some(element => (currentPosition + element + 1) % width === 0)
-}
-
-function isAtLeftEgde(detail){
-	return detail.some(element => (currentPosition + element) % width === 0)
 }
 
 
@@ -242,7 +236,7 @@ function changeSpeed(newSpeed){
 
 function randomNumOfDetail(){
 	let randomNum = Math.floor(Math.random() * details.length)
-	//console.log("random", randomNum); //!del
+
 	return  randomNum;
 }
 
@@ -297,6 +291,60 @@ function isCurrentDetailGetOccupiedPlace(detail){
 	return detail.some(element => field[currentPosition + element].classList.contains('ground'));
 }
 
+function isAtRigthEdge(detail){
+	return detail.some(element => (currentPosition + element + 1) % width === 0)
+}
 
+function isAtLeftEgde(detail){
+	return detail.some(element => (currentPosition + element) % width === 0)
+}
+
+function checkGround(detail){
+
+	if(detail.some(index => field[currentPosition + index + width].classList.contains('ground'))){
+		return true
+	}
+	else 
+		return false;
+}
+
+function moveLeft(){
+	clearDetail();
+	if(!isAtLeftEgde(currentDetail)){
+		currentPosition--;
+	}
+	if(isCurrentDetailGetOccupiedPlace(currentDetail)){
+		currentPosition++;
+	}
+	draw()
+	//check ground after moving and unpause if necessary
+	if(!checkGround(currentDetail) && isPaused){
+		
+		clearTimeout(setTimeOutID);
+		setTimeOutID = null;
+		isPaused = false;
+		
+	}
+}
+
+
+function moveRight(){
+	clearDetail()
+	if(!isAtRigthEdge(currentDetail)){
+		currentPosition++;
+	}
+	if(isCurrentDetailGetOccupiedPlace(currentDetail)){
+		currentPosition--;
+	}
+	draw()
+	//check ground after moving and unpause if necessary
+	if(!checkGround(currentDetail) && isPaused){
+	
+		clearTimeout(setTimeOutID);
+		setTimeOutID = null;
+		isPaused = false;
+		
+	}
+}
 //
 
