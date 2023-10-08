@@ -94,7 +94,7 @@ function startGame(){
 
 
 function moveDown(){
-	if(!isPaused && !checkGround(currentDetail)){ //chek ground under detail to prevent moving just after rotetion
+	if(!isPaused && !checkGround(currentDetail)){ //check ground under detail to prevent moving just after rotetion
 		    stopDetail();
 			clearDetail();
 			currentPosition += width; //add widh to every number, and make it move down
@@ -102,6 +102,8 @@ function moveDown(){
 			stopDetail();
 			//
 	}
+	else
+		stopDetail();
 	
 	
 }
@@ -113,8 +115,8 @@ function stopDetail(){
 	if(checkGround(currentDetail)){
 		isPaused = true;
 		setTimeOutID = setTimeout(function(){ //pause before new detail to make move current detail on "ground"
-			makeDetailUnmovable();
-		}, 1000);//add class GROUND to detail to stop it (currentSpeed / 1.4)
+			makeDetailUnmovable();//add class GROUND to detail to stop it 
+		}, currentSpeed / 1.3);
 		
 	}
 
@@ -220,12 +222,21 @@ function controlList(event){
 		rotate();
 	}	
 	else if(event.keyCode === 40){
-		changeSpeed(20)
+		changeSpeed(baseSpeed)
+	}
+}
+
+function changeSpeedButtonController(event){
+	
+	if(event.keyCode === 40){
+		console.log("keyDown")
+		changeSpeed(40)
 	}
 }
 //add event listener to catch all keyUp
 document.addEventListener('keyup', controlList);
 
+document.addEventListener('keydown', changeSpeedButtonController);
 
 function changeSpeed(newSpeed){
 	clearInterval(timerId);
@@ -323,7 +334,7 @@ function moveLeft(){
 		clearTimeout(setTimeOutID);
 		setTimeOutID = null;
 		isPaused = false;
-		
+		console.log("move left - ", setTimeOutID, isPaused);
 	}
 }
 
