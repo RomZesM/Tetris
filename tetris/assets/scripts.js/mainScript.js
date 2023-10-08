@@ -11,6 +11,7 @@ const button4 = document.querySelector(".but4")
 const glass = document.querySelector(".glass")
 const scoreField = document.querySelector(".score")
 export let field = Array.from(document.querySelectorAll('.glass div'));
+let nextScreen = Array.from(document.querySelectorAll('.nextDetailScreen div'));
 
 let setTimeOutID = 0;			//to stop setTimeOut for completing stopDetail Function
 let timerId = 0;             //to stop setInterval for moveDown()
@@ -18,12 +19,25 @@ let moveHorisontalLeftId = 0; //to stop setinterval fot move left, while pressin
 let moveHorisontalRightId = 0;//to stop setinterval fot move left, while pressing key
 let isNewDetailAppear = false; //to stop automoving down after new detail appear while pressing down key
 
-let baseSpeed = 500;
-let currentSpeed = baseSpeed;
-let currentPosition = 4;
+let baseSpeed = 1000;
+let currentSpeed = baseSpeed; 
+
+let currentPosition = 4; //position from left edge of glass
 let rotatePosition = 0;
+let nextDetailIndex = 0;
 let currentDetailPack = details[randomNumOfDetail()]
 let currentDetail = currentDetailPack[rotatePosition];
+let nextDetailPack = details[randomNumOfDetail()];
+let sScreenWidth = 4;
+let detailsForSmallScreen = [[0,1,2,sScreenWidth],
+							[0,1,2, sScreenWidth + 2],
+							[1,2,sScreenWidth, sScreenWidth+1],
+							[0,1, sScreenWidth + 1, sScreenWidth + 2],
+							[0,1,2, sScreenWidth+1],
+							[0,1,sScreenWidth, sScreenWidth+1],
+							[sScreenWidth,sScreenWidth+1,sScreenWidth+2,sScreenWidth+3],[]]
+
+
 let score = 0;
 
 
@@ -33,6 +47,8 @@ let score = 0;
 setFieldCoordinate();
 createScoreTableInLocalStorage()
 showScoreTable();
+draw();
+drawNext();
 
 let isPaused = false;
 
@@ -41,9 +57,9 @@ button1.addEventListener("click", (e)=>{
 	//testdraw()
 	//(e).preventDefault();
 
-	setScoreInScoreTableLocalstorage(score);
-	showScoreTable();
-	
+	// setScoreInScoreTableLocalstorage(score);
+	// showScoreTable();
+	drawNext()
 });
 
 button2.addEventListener("click", (e)=>{
@@ -69,21 +85,31 @@ button4.addEventListener("click", (e)=>{
 function draw(){
 	for (let i = 0; i < currentDetail.length; i++) {
 		const element = currentDetail[i];
+		console.log(currentDetail, element, currentPosition);
 		field[currentPosition + element].classList.add("detail")
 	}
 }
 
-//////////////
 
-// function testdraw(det){
-// 	let testDet = det[3];
+
+////////////
+function drawNext(){
+	//CLEAR screen
+	nextScreen.forEach((element)=>{
+		element.classList.remove("detail");
+	});
+
+
+	let testDet = detailsForSmallScreen[nextDetailIndex];
+
 	
-// 	for (let i = 0; i < testDet.length; i++) {
-// 		const element = testDet[i];
-// 		field[element].classList.add("detail")
-// 	}
-// }
-// testdraw(stick_detail)
+	console.log(testDet);
+	for (let i = 0; i < testDet.length; i++) {
+		const element = testDet[i];
+		nextScreen[element].classList.add("detail")
+	}
+}
+
 
 
 function clearDetail(){
@@ -132,10 +158,8 @@ function makeDetailUnmovable(){
 		field[currentPosition + element].classList.add("ground")
 		});
 		checkFullRow();		
-		//create new random detail
-		currentDetailPack = details[randomNumOfDetail()];
-		rotatePosition = 0;
-		currentDetail = currentDetailPack[rotatePosition];
+		createNewRandomDetail()
+		drawNext();
 		//restart the position
 		currentPosition = 4;
 		
@@ -151,6 +175,17 @@ function makeDetailUnmovable(){
 	}
 	
 	
+}
+
+function createNewRandomDetail(){
+		currentDetailPack = nextDetailPack;
+		nextDetailPack = details[randomNumOfDetail()];
+		
+		rotatePosition = 0;
+		currentDetail = currentDetailPack[rotatePosition];
+		
+
+
 }
 
 
@@ -193,9 +228,9 @@ function checkRotation(){
 		rotationPosStub++;
 	}	
 	 currentDetailStub = currentDetailPack[rotationPosStub];
-	//check if two detail doesn't have common square and doest take two edges simultaneusly
 
-	 if(isCurrentDetailGetOccupiedPlace(currentDetailStub) ||
+	//check if two detail doesn't have common square and doest take two edges simultaneusly
+	if(isCurrentDetailGetOccupiedPlace(currentDetailStub) ||
 	 (isAtLeftEgde(currentDetailStub) && isAtRigthEdge(currentDetailStub))){
 		//console.log("forbid rotate");
 		return false;
@@ -245,9 +280,9 @@ function changeSpeedButtonController(event){
 	}
 
 	if(event.keyCode === 40){
-		console.log("isNewDeTApp", isNewDetailAppear);
+		
 		if(!isNewDetailAppear){
-			console.log("keyDown")
+		
 			changeSpeed(40)
 		}
 		
@@ -268,7 +303,7 @@ function changeSpeed(newSpeed){
 
 function randomNumOfDetail(){
 	let randomNum = Math.floor(Math.random() * details.length)
-
+	nextDetailIndex = randomNum; //for showing next detail in mini window
 	return  randomNum;
 }
 

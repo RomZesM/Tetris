@@ -1,29 +1,29 @@
 // import { width } from "./mainScript.js";
 
- 
-const lr_detail = [[width, width+1, width+2, width *2 + 2],
+ //[[width, width+1, width+2, width *2 + 2],
+const lr_detail = [[0, 1, 2, width + 2],
 				[width * 2, width * 2 + 1, width + 1, 1],
 				[0, width,  width + 1, width + 2],
 				[1, 2, width + 1, width * 2 + 1]];	
 	
-const ll_detail = [[width, width+1, width+2, width *2],
+const ll_detail = [[0, 1, 2, width],
 				[0, 1, width + 1, width * 2 + 1],
 				[2, width,  width + 1, width + 2],
 				[1, width *2 + 2, width + 1, width * 2 + 1]]				
 				
 
 				
-const zl_detail = [[width * 2, width * 2 + 1,  width * 1 + 1, width * 1 + 2],
+const zl_detail = [[1 , 2,  width, width + 1],
 				[1, width + 1,  width + 2, width * 2 + 2],
 				[width * 2, width * 2 + 1,  width * 1 + 1, width * 1 + 2],
 				[1, width + 1,  width + 2, width * 2 + 2]];
 
- const zr_detail = [[width, width + 1,  width * 2 + 1, width * 2 + 2],
+ const zr_detail = [[0, 1,  width + 1, width + 2],
 						[2, width + 1,  width * 1 + 2, width * 2 + 1],
 						[width, width + 1,  width * 2 + 1, width * 2 + 2],
 						[2, width + 1,  width * 1 + 2, width * 2 + 1]];		
 						
-const t_detail =	[[width, width + 1,  width + 2, width * 2 + 1],
+const t_detail =	[[0, 1,  2, width + 1],
 						[1, width,  width + 1, width * 2 + 1],
 						[1, width,  width + 1, width + 2],
 						[1, width + 1,  width + 2, width * 2 + 1]];	
@@ -32,18 +32,21 @@ const t_detail =	[[width, width + 1,  width + 2, width * 2 + 1],
 							[0, 1,  width, width + 1],
 							[0, 1,  width, width + 1],
 							[0, 1,  width, width + 1]];	
-
-const stick_detail =	[[width * 2, width * 2 + 1,  width * 2 + 2, width * 2 + 3],
+//[[width * 2, width * 2 + 1,  width * 2 + 2, width * 2 + 3],
+const stick_detail =	[[0, 1, 2, 3],
 							[2, width + 2,  width * 2 + 2, width * 3 + 2],
 							[width * 2, width * 2 + 1,  width * 2 + 2, width * 2 + 3],
 							[2, width + 2,  width * 2 + 2, width * 3 + 2]];	
 
 export const details = [ll_detail, lr_detail, zl_detail, zr_detail, t_detail, cube_detail, stick_detail];
 
-//!del
-// function makeDetailUngroundAfterRotation(){
+
+// function testdraw(det){
+// 	let testDet = det[3];
 	
-// 	currentDetail.forEach(element => { //draw figure on field with class ground
-// 		field[currentPosition + element].classList.remove("ground")
-// 	});
+// 	for (let i = 0; i < testDet.length; i++) {
+// 		const element = testDet[i];
+// 		field[element].classList.add("detail")
+// 	}
 // }
+// testdraw(stick_detail)
