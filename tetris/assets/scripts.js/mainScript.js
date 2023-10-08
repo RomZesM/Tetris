@@ -219,6 +219,7 @@ function controlList(event){
 		
 	}
 	else if(event.keyCode === 38){
+		isNewDetailAppear = false; //prevent breaking fastDown after rotation (dont remember why)
 		rotate();
 	}	
 	else if(event.keyCode === 40){
@@ -244,7 +245,7 @@ function changeSpeedButtonController(event){
 	}
 
 	if(event.keyCode === 40){
-		
+		console.log("isNewDeTApp", isNewDetailAppear);
 		if(!isNewDetailAppear){
 			console.log("keyDown")
 			changeSpeed(40)
@@ -258,7 +259,7 @@ document.addEventListener('keyup', controlList);
 document.addEventListener('keydown', changeSpeedButtonController);
 
 function changeSpeed(newSpeed){
-	console.log("set speed: ", newSpeed);
+	//console.log("set speed: ", newSpeed);
 	clearInterval(timerId);
 	currentSpeed = newSpeed;
 	startGame()
