@@ -28,7 +28,7 @@ let nextDetailIndex = 0;
 let currentDetailPack = details[randomNumOfDetail()]
 let currentDetail = currentDetailPack[rotatePosition];
 let nextDetailPack = details[randomNumOfDetail()];
-let sScreenWidth = 4;
+let sScreenWidth = 4; //with for second screen with next detail
 let detailsForSmallScreen = [[0,1,2,sScreenWidth],
 							[0,1,2, sScreenWidth + 2],
 							[1,2,sScreenWidth, sScreenWidth+1],
@@ -39,6 +39,8 @@ let detailsForSmallScreen = [[0,1,2,sScreenWidth],
 
 
 let score = 0;
+let softDropCounter = 0;
+let isSoftDropping = false;
 
 
 //Global variables in index.html
@@ -85,7 +87,6 @@ button4.addEventListener("click", (e)=>{
 function draw(){
 	for (let i = 0; i < currentDetail.length; i++) {
 		const element = currentDetail[i];
-		console.log(currentDetail, element, currentPosition);
 		field[currentPosition + element].classList.add("detail")
 	}
 }
@@ -128,6 +129,10 @@ function moveDown(){
 		    stopDetail();
 			clearDetail();
 			currentPosition += width; //add widh to every number, and make it move down
+			if(isSoftDropping){ //counting softdropping for score
+				softDropCounter++;
+				
+			}
 			draw();
 			stopDetail();
 			//
@@ -167,6 +172,13 @@ function makeDetailUnmovable(){
 		
 		draw();
 		isNewDetailAppear = true; //to prevent fast falling down after new detail wad appear
+		if(isSoftDropping){
+			console.log(softDropCounter);
+			addScore(softDropCounter);
+			isSoftDropping = false;
+			softDropCounter = 0;
+			
+		}
 		gameOver();
 		isPaused = false;
 	}
@@ -260,21 +272,24 @@ function controlList(event){
 	else if(event.keyCode === 40){
 		changeSpeed(baseSpeed)
 		isNewDetailAppear = false;
+		//stop softdropping when release down button, clear softDrop score
+		isSoftDropping = false;
+		softDropCounter = 0;
 	}
 }
 //check what key was pressed and do action, shoot when PRESS key
-function changeSpeedButtonController(event){
+function controlListForKeyDown(event){
 	if(event.keyCode === 37	){
 		moveLeft();
 		if(moveHorisontalLeftId === null){ //preventing multiply SETINTERVAl
-			moveHorisontalLeftId = setInterval(moveLeft, 150);
+			moveHorisontalLeftId = setInterval(moveLeft, 100);
 		}
 		
 	}
 	else if(event.keyCode === 39){
 		moveRight();
 		if(moveHorisontalRightId === null){//preventing multiply SETINTERVAl
-			moveHorisontalRightId = setInterval(moveRight, 150);
+			moveHorisontalRightId = setInterval(moveRight, 100);
 		}
 		
 	}
@@ -282,7 +297,7 @@ function changeSpeedButtonController(event){
 	if(event.keyCode === 40){
 		
 		if(!isNewDetailAppear){
-		
+			isSoftDropping = true; //for counting greed of soft dropping
 			changeSpeed(40)
 		}
 		
@@ -291,7 +306,7 @@ function changeSpeedButtonController(event){
 //add event listener to catch all keyUp
 document.addEventListener('keyup', controlList);
 
-document.addEventListener('keydown', changeSpeedButtonController);
+document.addEventListener('keydown', controlListForKeyDown);
 
 function changeSpeed(newSpeed){
 	//console.log("set speed: ", newSpeed);
@@ -314,7 +329,7 @@ function checkFullRow(){
 		if(row.every(index => field[index].classList.contains('ground'))){
 			
 			clearRow(row);
-			addScore();
+			addScore(10);
 			
 			let splicedRow = field.splice(i, width);//slice row which was filled
 			field = splicedRow.concat(field)//move row on top of glass
@@ -334,8 +349,8 @@ function clearRow(row){
 	});
 }
 
-function addScore(){
-	score += 10;
+function addScore(amount){
+	score += amount;
 	scoreField.innerHTML = score;
 }
 
