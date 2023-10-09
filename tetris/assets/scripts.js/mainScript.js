@@ -10,6 +10,8 @@ const button4 = document.querySelector(".but4")
 //
 const glass = document.querySelector(".glass")
 const scoreField = document.querySelector(".score")
+const linesField = document.querySelector(".lines")
+const levelField = document.querySelector(".level")
 export let field = Array.from(document.querySelectorAll('.glass div'));
 let nextScreen = Array.from(document.querySelectorAll('.nextDetailScreen div'));
 
@@ -179,7 +181,6 @@ function makeDetailUnmovable(){
 			addScore(softDropCounter);
 			isSoftDropping = false;
 			softDropCounter = 0;
-			
 		}
 		gameOver();
 		isPaused = false;
@@ -349,9 +350,9 @@ function checkFullRow(){
 		}	
 		
 	}
-	lines += rows; //lines is a global rows counter
-	scoreCounter(rows);
 	
+	scoreCounter(rows);
+	linesCounter(rows); //lines is a global rows counter
 }
 
 //remove classes detail or ground from cell in glass
@@ -379,8 +380,13 @@ function scoreCounter(lines){
 	}
 	addScore(scoresLocal);
 }
-
-
+//count lines and increase level
+function linesCounter(linesLocal){
+	lines += linesLocal;
+	level = Math.floor(lines / 10);
+	linesField.innerHTML = lines; //show lines and level for player
+	levelField.innerHTML = level;
+}
 
 function addScore(amount){
 	score += amount;
