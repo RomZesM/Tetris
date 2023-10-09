@@ -3,6 +3,7 @@ import { addScore } from "./utils.js";
 const linesField = document.querySelector(".lines")
 const levelField = document.querySelector(".level")
 const speedField = document.querySelector(".speed")
+const detailsCountersFields = Array.from(document.querySelectorAll(".det-counter"));
 let lines = 0;
 let previousLevel = 0
 let level = 0;
@@ -51,4 +52,14 @@ export function speedCounter(){
 	}
 
 	speedField.innerHTML = baseSpeed;
+}
+
+export function showDetailsCounter(){
+	//console.log("currend detail index", countDetailsArr);
+	for (let i = 0; i < countDetailsArr.length; i++) {
+		detailsCountersFields[i].innerHTML = countDetailsArr[i];
+	}
+	
+		
+	
 }

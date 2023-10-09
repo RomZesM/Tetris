@@ -12,7 +12,7 @@ import { drawNext } from "./utils.js";
 import { randomNumOfDetail } from "./utils.js";
 import { createNewRandomDetail } from "./utils.js";
 import { clearRow, addScore } from "./utils.js";
-import {scoreCounter, speedCounter, linesCounter} from "./counters.js"
+import {scoreCounter, speedCounter, linesCounter, showDetailsCounter} from "./counters.js"
 
 
 const button1 = document.querySelector(".but1")
@@ -41,16 +41,28 @@ const button4 = document.querySelector(".but4")
 // let baseSpeed = 800;
 // let currentSpeed = baseSpeed; 
 //let softDropCounter = 0; //count lines during softdrop
+//let curentDetailIndex = 0;//for detail counter monitor
 
 //!set special event -> do it after page load
 const glass = document.querySelector(".glass")
-currentDetailPack = details[randomNumOfDetail()]
+countDetailsArr = [0,0,0,0,0,0,0];
+createStartDetails();
+
 currentDetail = currentDetailPack[rotatePosition];
-nextDetailPack = details[randomNumOfDetail()];
-currentPosition = 4
-field = Array.from(document.querySelectorAll('.glass div'))
+
+currentPosition = 4;
+field = Array.from(document.querySelectorAll('.glass div'));
 
 
+//console.log(countDetailsArr);
+
+function createStartDetails(){
+	let randomDet = randomNumOfDetail();
+	countDetailsArr[randomDet] = Number.parseInt(countDetailsArr[randomDet]) + 1; //add detail into array for counting, then count while create random detail
+	showDetailsCounter();
+	nextDetailPack = details[randomDet]
+	createNewRandomDetail();
+}
 
 
 createScoreTableInLocalStorage()
@@ -81,6 +93,8 @@ button4.addEventListener("click", (e)=>{
 document.addEventListener('keyup', controlList);
 
 document.addEventListener('keydown', controlListForKeyDown);
+
+
 
 
 export function startGame(){
@@ -135,6 +149,7 @@ function makeDetailUnmovable(){
 		field[currentPosition + element].classList.add("ground")
 		});
 		checkFullRow();		
+		showDetailsCounter();//update detail counter screen
 		createNewRandomDetail()
 		drawNext();
 		//restart the position
@@ -176,6 +191,7 @@ function checkFullRow(){
 	scoreCounter(rows);
 	linesCounter(rows); //lines is a global rows counter
 	speedCounter();
+	
 }
 
 function gameOver(){	
@@ -186,7 +202,7 @@ function gameOver(){
 		currentDetail.forEach(element => { //draw figure on field with class ground
 			field[currentPosition + element].classList.add("ground")
 		});
-		setScoreInScoreTableLocalstorage(score)
+		setScoreInScoreTableLocalstorage()
 		showScoreTable();
 		isPaused = true;
 		console.log("finish");

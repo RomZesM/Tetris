@@ -32,11 +32,11 @@ export function createScoreTableInLocalStorage(){
 	}
 }
 
-export function setScoreInScoreTableLocalstorage(score){ //change one field in userObject
+export function setScoreInScoreTableLocalstorage(){ //change one field in userObject
 	let scoreTable = JSON.parse(localStorage.getItem("scoreTable")); //get current user
 	scoreTable.splice(0,0, score) //add into beginning new score
 	scoreTable = scoreTable.sort((a , b )=> b - a);
-	console.log(scoreTable, scoreTable.length);
+	//console.log(scoreTable, scoreTable.length);
 	if(scoreTable.length > 10){
 		scoreTable.splice(10);		
 		 console.log("scoreTable", scoreTable); 
@@ -107,14 +107,16 @@ export function drawNext(){
 
 export function randomNumOfDetail(){
 	let randomNum = Math.floor(Math.random() * details.length)
-	nextDetailIndex = randomNum; //for showing next detail in mini window
+	//nextDetailIndex = randomNum; //for showing next detail in mini window
 	return  randomNum;
 }
 
 export function createNewRandomDetail(){
 	currentDetailPack = nextDetailPack;
-	nextDetailPack = details[randomNumOfDetail()];
-	
+	let randomInt = randomNumOfDetail();
+	nextDetailIndex = randomInt; //for showing next detail in mini window
+	nextDetailPack = details[randomInt];
+	countDetailsArr[randomInt]++;
 	rotatePosition = 0;
 	currentDetail = currentDetailPack[rotatePosition];
 }
