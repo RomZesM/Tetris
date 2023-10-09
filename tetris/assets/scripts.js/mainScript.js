@@ -39,6 +39,8 @@ let detailsForSmallScreen = [[0,1,2,sScreenWidth],
 
 
 let score = 0;
+let lines = 0;
+let level = 0;
 let softDropCounter = 0;
 let isSoftDropping = false;
 
@@ -157,7 +159,7 @@ function stopDetail(){
 }	
 function makeDetailUnmovable(){
 	if(isPaused && checkGround(currentDetail)){
-		console.log("make unmovable", currentPosition);
+		//console.log("make unmovable", currentPosition);
 		currentDetail.forEach(element => { //draw figure on field with class ground
 		field[currentPosition + element].classList.add("ground")
 		});
@@ -276,7 +278,7 @@ function controlList(event){
 		isKeyDownPressed = false;
 		changeSpeed(baseSpeed)
 		isNewDetailAppear = false;
-		
+
 		//stop softdropping when release down button, clear softDrop score
 		isSoftDropping = false;
 		softDropCounter = 0;
@@ -316,7 +318,7 @@ document.addEventListener('keyup', controlList);
 document.addEventListener('keydown', controlListForKeyDown);
 
 function changeSpeed(newSpeed){
-	console.log("set speed: ", newSpeed);
+	//console.log("set speed: ", newSpeed);
 	clearInterval(timerId);
 	currentSpeed = newSpeed;
 	startGame()
@@ -330,21 +332,25 @@ function randomNumOfDetail(){
 }
 
 function checkFullRow(){
+	let rows = 0;
+	
 	for(let i = 0; i < field.length-10; i+=width){
 		let row = [i, i+1, i+2, i+3, i+4, i+5, i+6, i+7, i+8,i+9]
 		//check all row in fild for ground
 		if(row.every(index => field[index].classList.contains('ground'))){
 			
 			clearRow(row);
-			addScore(10);
+			
 			
 			let splicedRow = field.splice(i, width);//slice row which was filled
 			field = splicedRow.concat(field)//move row on top of glass
 			field.forEach(cell => glass.appendChild(cell));//insert all new cell into glass
-		
+			rows++;
 		}	
 		
 	}
+	lines += rows; //lines is a global rows counter
+	scoreCounter(rows);
 	
 }
 
@@ -355,6 +361,26 @@ function clearRow(row){
 		field[element].classList.remove("detail");
 	});
 }
+//count score dependin on lines was dissapiared and level
+function scoreCounter(lines){
+	console.log("lines", lines);
+	let scoresLocal = 0;
+	if(lines === 1){
+		scoresLocal = 40 * (level + 1);
+	}
+	else if(lines === 2){
+		scoresLocal = 100 * (level + 1);
+	}
+	else if(lines === 3){
+		scoresLocal = 300 * (level + 1);
+	}
+	else if(lines === 4){
+		scoresLocal = 1200 * (level + 1);
+	}
+	addScore(scoresLocal);
+}
+
+
 
 function addScore(amount){
 	score += amount;
