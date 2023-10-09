@@ -15,10 +15,9 @@ import { clearRow, addScore } from "./utils.js";
 import {scoreCounter, speedCounter, linesCounter, showDetailsCounter} from "./counters.js"
 
 
-const button1 = document.querySelector(".but1")
-const button2 = document.querySelector(".but2")
-const button3 = document.querySelector(".but3")
-const button4 = document.querySelector(".but4")
+const glassOverlay = document.querySelector(".glass-overlay");
+const startButton = document.querySelector(".start-button")
+const pauseButton = document.querySelector(".pause-button")
 //
 
 
@@ -54,8 +53,6 @@ currentPosition = 4;
 field = Array.from(document.querySelectorAll('.glass div'));
 
 
-//console.log(countDetailsArr);
-
 function createStartDetails(){
 	let randomDet = randomNumOfDetail();
 	countDetailsArr[randomDet] = Number.parseInt(countDetailsArr[randomDet]) + 1; //add detail into array for counting, then count while create random detail
@@ -70,22 +67,15 @@ showScoreTable();
 draw();
 drawNext();
 
-
-
-button1.addEventListener("click", (e)=>{
-	drawNext()
+pauseButton.addEventListener("click", (e)=>{
+	if(isPaused === false)
+		isPaused = true
+	else
+		isPaused = false;
 });
 
-button2.addEventListener("click", (e)=>{
-	isPaused = false;
-});
-
-button3.addEventListener("click", (e)=>{
-	clearInterval(timerId);
-
-});
-
-button4.addEventListener("click", (e)=>{
+startButton.addEventListener("click", (e)=>{
+	glassOverlay.classList.add("glass-overlay-hide")
 	startGame()
 });
 
@@ -205,7 +195,9 @@ function gameOver(){
 		setScoreInScoreTableLocalstorage()
 		showScoreTable();
 		isPaused = true;
+		glassOverlay.classList.remove("glass-overlay-hide")
 		console.log("finish");
+		location.reload();
 	}
 }
 

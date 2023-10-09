@@ -9,10 +9,59 @@
 	border: 2px solid black;
 }
 
+.start-button{
+	color: burlywood;
+	width: 100px;
+	height: 50px;
+	border: 2px solid burlywood;
+}
+
+.pause-button{
+	color: burlywood;
+	width: 100px;
+	height: 50px;
+	border: 2px solid burlywood;
+}
+
 .container{
 	display: flex;
 	gap: 30px;
+	position: relative;
 }
+
+.glass-overlay{
+	position: fixed;
+	z-index: 100;
+	left: 8px;
+	top: 8px;
+	right: 0;
+	bottom: 0;
+	background-color: rgba(0,0,0, 0.5);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 520px;
+	height: 1040px;
+
+	opacity: 1;
+	visibility: visible;
+	transition: all 0.4 ease-out;
+
+}
+
+.glass-overlay-hide{
+	opacity: 0;
+	visibility: hidden;
+	transition: all 0.4s ease-in-out;
+}
+
+.start-button{
+	color: burlywood;
+	width: 100px;
+	height: 50px;
+	border: 2px solid burlywood;
+}
+
 
 .glass{
 	display: flex;
