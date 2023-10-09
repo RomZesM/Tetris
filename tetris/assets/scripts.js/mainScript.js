@@ -102,9 +102,7 @@ function drawNext(){
 
 
 	let testDet = detailsForSmallScreen[nextDetailIndex];
-
-	
-	console.log(testDet);
+		
 	for (let i = 0; i < testDet.length; i++) {
 		const element = testDet[i];
 		nextScreen[element].classList.add("detail")
@@ -125,6 +123,7 @@ function startGame(){
 
 
 function moveDown(){
+	//console.log("is new det appear move down", isNewDetailAppear);
 	if(!isPaused && !checkGround(currentDetail)){ //check ground under detail to prevent moving just after rotetion
 		    stopDetail();
 			clearDetail();
@@ -134,7 +133,7 @@ function moveDown(){
 				
 			}
 			draw();
-			stopDetail();
+			//stopDetail();
 			//
 	}
 	else
@@ -158,7 +157,7 @@ function stopDetail(){
 }	
 function makeDetailUnmovable(){
 	if(isPaused && checkGround(currentDetail)){
-		//console.log("make unmovable", currentPosition);
+		console.log("make unmovable", currentPosition);
 		currentDetail.forEach(element => { //draw figure on field with class ground
 		field[currentPosition + element].classList.add("ground")
 		});
@@ -172,6 +171,7 @@ function makeDetailUnmovable(){
 		
 		draw();
 		isNewDetailAppear = true; //to prevent fast falling down after new detail wad appear
+		
 		if(isSoftDropping){
 			console.log(softDropCounter);
 			addScore(softDropCounter);
@@ -244,13 +244,14 @@ function checkRotation(){
 	//check if two detail doesn't have common square and doest take two edges simultaneusly
 	if(isCurrentDetailGetOccupiedPlace(currentDetailStub) ||
 	 (isAtLeftEgde(currentDetailStub) && isAtRigthEdge(currentDetailStub))){
-		//console.log("forbid rotate");
+		
 		return false;
 	 }
 	 else return true;
 
 
 }
+let isKeyDownPressed = false;
 
 //check what key was pressed and do action shoot when RELEASE key
 function controlList(event){
@@ -266,12 +267,16 @@ function controlList(event){
 		
 	}
 	else if(event.keyCode === 38){
+		
 		isNewDetailAppear = false; //prevent breaking fastDown after rotation (dont remember why)
 		rotate();
 	}	
 	else if(event.keyCode === 40){
+		console.log("key down release");
+		isKeyDownPressed = false;
 		changeSpeed(baseSpeed)
 		isNewDetailAppear = false;
+		
 		//stop softdropping when release down button, clear softDrop score
 		isSoftDropping = false;
 		softDropCounter = 0;
@@ -295,8 +300,10 @@ function controlListForKeyDown(event){
 	}
 
 	if(event.keyCode === 40){
+		//console.log("is new detail appear - pr down ", isNewDetailAppear);
 		
-		if(!isNewDetailAppear){
+		if(!isNewDetailAppear && !isKeyDownPressed){
+			isKeyDownPressed = true;
 			isSoftDropping = true; //for counting greed of soft dropping
 			changeSpeed(40)
 		}
@@ -309,7 +316,7 @@ document.addEventListener('keyup', controlList);
 document.addEventListener('keydown', controlListForKeyDown);
 
 function changeSpeed(newSpeed){
-	//console.log("set speed: ", newSpeed);
+	console.log("set speed: ", newSpeed);
 	clearInterval(timerId);
 	currentSpeed = newSpeed;
 	startGame()

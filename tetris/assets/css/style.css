@@ -33,7 +33,7 @@
 .nextDetailScreen{
 	display: flex;
 	flex-wrap: wrap;
-	width: 206px;
+	width: 208px;
 	height: 104px;
 	background-color: brown;
 }
