@@ -12,6 +12,7 @@ const glass = document.querySelector(".glass")
 const scoreField = document.querySelector(".score")
 const linesField = document.querySelector(".lines")
 const levelField = document.querySelector(".level")
+const speedField = document.querySelector(".speed")
 export let field = Array.from(document.querySelectorAll('.glass div'));
 let nextScreen = Array.from(document.querySelectorAll('.nextDetailScreen div'));
 
@@ -21,7 +22,7 @@ let moveHorisontalLeftId = 0; //to stop setinterval fot move left, while pressin
 let moveHorisontalRightId = 0;//to stop setinterval fot move left, while pressing key
 let isNewDetailAppear = false; //to stop automoving down after new detail appear while pressing down key
 
-let baseSpeed = 1000;
+let baseSpeed = 800;
 let currentSpeed = baseSpeed; 
 
 let currentPosition = 4; //position from left edge of glass
@@ -42,6 +43,7 @@ let detailsForSmallScreen = [[0,1,2,sScreenWidth],
 
 let score = 0;
 let lines = 0;
+let previousLevel = 0
 let level = 0;
 let softDropCounter = 0;
 let isSoftDropping = false;
@@ -129,12 +131,12 @@ function startGame(){
 function moveDown(){
 	//console.log("is new det appear move down", isNewDetailAppear);
 	if(!isPaused && !checkGround(currentDetail)){ //check ground under detail to prevent moving just after rotetion
-		    stopDetail();
+		   
+			stopDetail();
 			clearDetail();
 			currentPosition += width; //add widh to every number, and make it move down
 			if(isSoftDropping){ //counting softdropping for score
-				softDropCounter++;
-				
+				softDropCounter++;				
 			}
 			draw();
 			//stopDetail();
@@ -152,9 +154,18 @@ function stopDetail(){
 	//check 1 square under detail if it "ground"
 	if(checkGround(currentDetail)){
 		isPaused = true;
+		isNewDetailAppear = true;//to prevent fast falling down after new detail was appear
+
+		if(isSoftDropping){
+			console.log("softDrop", softDropCounter);
+			addScore(softDropCounter);
+			isSoftDropping = false;
+			softDropCounter = 0;
+		}
+		
 		setTimeOutID = setTimeout(function(){ //pause before new detail to make move current detail on "ground"
 			makeDetailUnmovable();//add class GROUND to detail to stop it 
-		}, currentSpeed / 1.3);
+		}, baseSpeed / 1.4); //Lock Delay for half a second or 30 frames
 		
 	}
 
@@ -171,17 +182,17 @@ function makeDetailUnmovable(){
 		//restart the position
 		currentPosition = 4;
 		
-		changeSpeed(baseSpeed);
+		changeSpeed(baseSpeed);		
 		
+		isKeyDownPressed = false;//--to prevent fast falling down after new detail was appear
 		draw();
-		isNewDetailAppear = true; //to prevent fast falling down after new detail wad appear
 		
-		if(isSoftDropping){
-			console.log(softDropCounter);
-			addScore(softDropCounter);
-			isSoftDropping = false;
-			softDropCounter = 0;
-		}
+		// if(isSoftDropping){
+		// 	console.log(softDropCounter);
+		// 	addScore(softDropCounter);
+		// 	isSoftDropping = false;
+		// 	softDropCounter = 0;
+		// }
 		gameOver();
 		isPaused = false;
 	}
@@ -275,14 +286,13 @@ function controlList(event){
 		rotate();
 	}	
 	else if(event.keyCode === 40){
-		console.log("key down release");
 		isKeyDownPressed = false;
-		changeSpeed(baseSpeed)
 		isNewDetailAppear = false;
-
+		changeSpeed(baseSpeed)
 		//stop softdropping when release down button, clear softDrop score
 		isSoftDropping = false;
 		softDropCounter = 0;
+		console.log("key down release, is new detail", isNewDetailAppear);
 	}
 }
 //check what key was pressed and do action, shoot when PRESS key
@@ -303,14 +313,13 @@ function controlListForKeyDown(event){
 	}
 
 	if(event.keyCode === 40){
-		//console.log("is new detail appear - pr down ", isNewDetailAppear);
-		
+		//console.log("key down press ", isNewDetailAppear);
 		if(!isNewDetailAppear && !isKeyDownPressed){
 			isKeyDownPressed = true;
 			isSoftDropping = true; //for counting greed of soft dropping
 			changeSpeed(40)
 		}
-		
+		console.log("key down press, isSoftDropping ", isSoftDropping);
 	}
 }
 //add event listener to catch all keyUp
@@ -353,6 +362,7 @@ function checkFullRow(){
 	
 	scoreCounter(rows);
 	linesCounter(rows); //lines is a global rows counter
+	speedCounter();
 }
 
 //remove classes detail or ground from cell in glass
@@ -380,12 +390,31 @@ function scoreCounter(lines){
 	}
 	addScore(scoresLocal);
 }
+
 //count lines and increase level
 function linesCounter(linesLocal){
 	lines += linesLocal;
+	previousLevel = level;//for speed checking
 	level = Math.floor(lines / 10);
 	linesField.innerHTML = lines; //show lines and level for player
 	levelField.innerHTML = level;
+}
+//make speed as in classical nintendo game (just more simplier ))
+function speedCounter(){
+	if(previousLevel != level){
+		if(level < 8){
+			baseSpeed -= 84;
+		}
+		else if(level === 8)
+			baseSpeed -= 84;
+		else if(level === 9)
+			baseSpeed = 100;
+		else if(level > 9 && level < 29)
+			baseSpeed -= 17;
+		else if(level >= 29)
+			baseSpeed = 16;
+	}
+	speedField.innerHTML = baseSpeed;
 }
 
 function addScore(amount){
@@ -439,8 +468,7 @@ function moveLeft(){
 	}
 	draw()
 	//check ground after moving and unpause if necessary
-	if(!checkGround(currentDetail) && isPaused){
-		
+	if(!checkGround(currentDetail) && isPaused){		
 		clearTimeout(setTimeOutID);
 		setTimeOutID = null;
 		isPaused = false;
@@ -459,8 +487,7 @@ function moveRight(){
 	}
 	draw()
 	//check ground after moving and unpause if necessary
-	if(!checkGround(currentDetail) && isPaused){
-	
+	if(!checkGround(currentDetail) && isPaused){	
 		clearTimeout(setTimeOutID);
 		setTimeOutID = null;
 		isPaused = false;
