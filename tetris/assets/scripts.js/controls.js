@@ -21,13 +21,12 @@ export function controlListForKeyDown(event){
 	}
 
 	if(event.keyCode === 40){
-		//console.log("key down press ", isNewDetailAppear);
 		if(!isNewDetailAppear && !isKeyDownPressed){
 			isKeyDownPressed = true;
 			isSoftDropping = true; //for counting greed of soft dropping
 			changeSpeed(40)
 		}
-		console.log("key down press, isSoftDropping ", isSoftDropping);
+		
 	}
 }
 
@@ -56,7 +55,7 @@ export function controlList(event){
 		//stop softdropping when release down button, clear softDrop score
 		isSoftDropping = false;
 		softDropCounter = 0;
-		console.log("key down release, is new detail", isNewDetailAppear);
+		//console.log("key down release, is new detail", isNewDetailAppear);
 	}
 }
 

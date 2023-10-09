@@ -1,4 +1,4 @@
-import { setFieldCoordinate, setScoreInScoreTableLocalstorage, showScoreTable } from "./utils.js";
+import { setScoreInScoreTableLocalstorage, showScoreTable } from "./utils.js";
 import { details } from "./details.js";
 import { createScoreTableInLocalStorage } from "./utils.js";
 import { controlList } from "./controls.js";
@@ -11,6 +11,8 @@ import { changeSpeed } from "./utils.js";
 import { drawNext } from "./utils.js";
 import { randomNumOfDetail } from "./utils.js";
 import { createNewRandomDetail } from "./utils.js";
+import { clearRow, addScore } from "./utils.js";
+import {scoreCounter, speedCounter, linesCounter} from "./counters.js"
 
 
 const button1 = document.querySelector(".but1")
@@ -18,19 +20,6 @@ const button2 = document.querySelector(".but2")
 const button3 = document.querySelector(".but3")
 const button4 = document.querySelector(".but4")
 //
-const glass = document.querySelector(".glass")
-const scoreField = document.querySelector(".score")
-const linesField = document.querySelector(".lines")
-const levelField = document.querySelector(".level")
-const speedField = document.querySelector(".speed")
-
-
-let score = 0;
-let lines = 0;
-let previousLevel = 0
-let level = 0;
-
-
 
 
 //Global variables in index.html
@@ -54,7 +43,7 @@ let level = 0;
 //let softDropCounter = 0; //count lines during softdrop
 
 //!set special event -> do it after page load
-
+const glass = document.querySelector(".glass")
 currentDetailPack = details[randomNumOfDetail()]
 currentDetail = currentDetailPack[rotatePosition];
 nextDetailPack = details[randomNumOfDetail()];
@@ -63,7 +52,7 @@ field = Array.from(document.querySelectorAll('.glass div'))
 
 
 
-setFieldCoordinate();
+
 createScoreTableInLocalStorage()
 showScoreTable();
 draw();
@@ -126,7 +115,7 @@ function stopDetail(){
 		isNewDetailAppear = true;//to prevent fast falling down after new detail was appear
 
 		if(isSoftDropping){
-			console.log("softDrop", softDropCounter);
+			//console.log("softDrop", softDropCounter);//!del
 			addScore(softDropCounter);
 			isSoftDropping = false;
 			softDropCounter = 0;
@@ -187,64 +176,6 @@ function checkFullRow(){
 	scoreCounter(rows);
 	linesCounter(rows); //lines is a global rows counter
 	speedCounter();
-}
-
-//remove classes detail or ground from cell in glass
-function clearRow(row){
-	row.forEach((element)=>{
-		field[element].classList.remove("ground");
-		field[element].classList.remove("detail");
-	});
-}
-//count score dependin on lines was dissapiared and level
-function scoreCounter(lines){
-	console.log("lines", lines);
-	let scoresLocal = 0;
-	if(lines === 1){
-		scoresLocal = 40 * (level + 1);
-	}
-	else if(lines === 2){
-		scoresLocal = 100 * (level + 1);
-	}
-	else if(lines === 3){
-		scoresLocal = 300 * (level + 1);
-	}
-	else if(lines === 4){
-		scoresLocal = 1200 * (level + 1);
-	}
-	addScore(scoresLocal);
-}
-
-//count lines and increase level
-function linesCounter(linesLocal){
-	lines += linesLocal;
-	previousLevel = level;//for speed checking
-	level = Math.floor(lines / 10);
-	linesField.innerHTML = lines; //show lines and level for player
-	levelField.innerHTML = level;
-}
-//make speed as in classical nintendo game (just more simplier ))
-function speedCounter(){
-	if(previousLevel != level){
-		if(level < 8){
-			baseSpeed -= 84;
-		}
-		else if(level === 8)
-			baseSpeed -= 84;
-		else if(level === 9)
-			baseSpeed = 100;
-		else if(level > 9 && level < 29)
-			baseSpeed -= 17;
-		else if(level >= 29)
-			baseSpeed = 16;
-	}
-
-	speedField.innerHTML = baseSpeed;
-}
-
-function addScore(amount){
-	score += amount;
-	scoreField.innerHTML = score;
 }
 
 function gameOver(){	

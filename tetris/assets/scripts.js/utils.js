@@ -13,14 +13,16 @@ let detailsForSmallScreen = [[0,1,2,sScreenWidth],
 							[0,1,sScreenWidth, sScreenWidth+1],
 							[sScreenWidth,sScreenWidth+1,sScreenWidth+2,sScreenWidth+3]]
 
+const scoreField = document.querySelector(".score")
+let score = 0;
 //!del after all
 
-export function setFieldCoordinate(){
-	for (let i = 0; i < field.length; i++) {
-		const element = field[i];
-		element.innerHTML = `${i}`;		
-	}
-}
+// export function setFieldCoordinate(){
+// 	for (let i = 0; i < field.length; i++) {
+// 		const element = field[i];
+// 		element.innerHTML = `${i}`;		
+// 	}
+// }
 
 
 export function createScoreTableInLocalStorage(){
@@ -115,4 +117,17 @@ export function createNewRandomDetail(){
 	
 	rotatePosition = 0;
 	currentDetail = currentDetailPack[rotatePosition];
+}
+
+//remove classes detail or ground from cell in glass
+export function clearRow(row){
+	row.forEach((element)=>{
+		field[element].classList.remove("ground");
+		field[element].classList.remove("detail");
+	});
+}
+
+export function addScore(amount){
+	score += amount;
+	scoreField.innerHTML = score;
 }
