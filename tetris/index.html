@@ -261,6 +261,23 @@
 	</div>
 	<script type='text/javascript' > 
 		var width = 10; 
+		let field = [];
+		let moveHorisontalLeftId = 0;
+		let moveHorisontalRightId = 0;
+		let isKeyDownPressed = false;
+		let isNewDetailAppear = false
+		let rotatePosition = 0; 
+		let currentDetail = '';
+		let currentDetailPack = '';
+		let currentPosition = 0;
+		let nextDetailPack = '';
+		let isPaused = false;
+		let isSoftDropping = false;
+		let setTimeOutID = 0;
+		let timerId = 0;
+		let baseSpeed = 800;
+		let currentSpeed = baseSpeed; 
+		let softDropCounter = 0
 	  </script>
 	<script type="module" src="/assets/scripts.js/mainScript.js"></script>
 	<script type="module" src="/assets/scripts.js/utils.js"></script>

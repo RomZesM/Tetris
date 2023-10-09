@@ -1,6 +1,16 @@
 import { setFieldCoordinate, setScoreInScoreTableLocalstorage, showScoreTable } from "./utils.js";
 import { details } from "./details.js";
 import { createScoreTableInLocalStorage } from "./utils.js";
+import { controlList } from "./controls.js";
+import { isCurrentDetailGetOccupiedPlace } from "./controls.js";
+import { controlListForKeyDown } from "./controls.js";
+import { clearDetail } from "./utils.js";
+import { draw } from "./utils.js";
+import { checkGround } from "./utils.js";
+import { changeSpeed } from "./utils.js";
+import { drawNext } from "./utils.js";
+import { randomNumOfDetail } from "./utils.js";
+import { createNewRandomDetail } from "./utils.js";
 
 
 const button1 = document.querySelector(".but1")
@@ -13,44 +23,45 @@ const scoreField = document.querySelector(".score")
 const linesField = document.querySelector(".lines")
 const levelField = document.querySelector(".level")
 const speedField = document.querySelector(".speed")
-export let field = Array.from(document.querySelectorAll('.glass div'));
-let nextScreen = Array.from(document.querySelectorAll('.nextDetailScreen div'));
-
-let setTimeOutID = 0;			//to stop setTimeOut for completing stopDetail Function
-let timerId = 0;             //to stop setInterval for moveDown()
-let moveHorisontalLeftId = 0; //to stop setinterval fot move left, while pressing key
-let moveHorisontalRightId = 0;//to stop setinterval fot move left, while pressing key
-let isNewDetailAppear = false; //to stop automoving down after new detail appear while pressing down key
-
-let baseSpeed = 800;
-let currentSpeed = baseSpeed; 
-
-let currentPosition = 4; //position from left edge of glass
-let rotatePosition = 0;
-let nextDetailIndex = 0;
-let currentDetailPack = details[randomNumOfDetail()]
-let currentDetail = currentDetailPack[rotatePosition];
-let nextDetailPack = details[randomNumOfDetail()];
-let sScreenWidth = 4; //with for second screen with next detail
-let detailsForSmallScreen = [[0,1,2,sScreenWidth],
-							[0,1,2, sScreenWidth + 2],
-							[1,2,sScreenWidth, sScreenWidth+1],
-							[0,1, sScreenWidth + 1, sScreenWidth + 2],
-							[0,1,2, sScreenWidth+1],
-							[0,1,sScreenWidth, sScreenWidth+1],
-							[sScreenWidth,sScreenWidth+1,sScreenWidth+2,sScreenWidth+3],[]]
 
 
 let score = 0;
 let lines = 0;
 let previousLevel = 0
 let level = 0;
-let softDropCounter = 0;
-let isSoftDropping = false;
+
+
 
 
 //Global variables in index.html
 //width = 10;
+//let moveHorisontalLeftId = 0; //to stop setinterval fot move left, while pressing key
+//let moveHorisontalRightId = 0;//to stop setinterval fot move rigth, while pressing key
+//let isKeyDownPressed = false; //check down key for doft dropping
+//let isNewDetailAppear = false; //to stop automoving down after new detail appear while pressing down key
+//let rotatePosition = 0; //index of detail variant while rotation
+//let currentDetail = ''; array for drowing current detail on screen
+//let currentDetailPack = '';  2dArray with all variant of rotation
+//let nextDetailPack = ''; //for genrating next detail
+//let currentPosition = 0; //position from left edge of glass
+//let field = []); //field where we draw game
+//let isPaused = false; //for pausing game without interval clear
+//let isSoftDropping = false; 
+// let setTimeOutID = 0;	//to stop setTimeOut for completing stopDetail Function
+// let timerId = 0;     //to stop setInterval for moveDown()
+// let baseSpeed = 800;
+// let currentSpeed = baseSpeed; 
+//let softDropCounter = 0; //count lines during softdrop
+
+//!set special event -> do it after page load
+
+currentDetailPack = details[randomNumOfDetail()]
+currentDetail = currentDetailPack[rotatePosition];
+nextDetailPack = details[randomNumOfDetail()];
+currentPosition = 4
+field = Array.from(document.querySelectorAll('.glass div'))
+
+
 
 setFieldCoordinate();
 createScoreTableInLocalStorage()
@@ -58,26 +69,15 @@ showScoreTable();
 draw();
 drawNext();
 
-let isPaused = false;
+
 
 button1.addEventListener("click", (e)=>{
-	//moveLeft();
-	//testdraw()
-	//(e).preventDefault();
-
-	// setScoreInScoreTableLocalstorage(score);
-	// showScoreTable();
 	drawNext()
 });
 
 button2.addEventListener("click", (e)=>{
-	//(e).preventDefault();
 	isPaused = false;
-
 });
-
-
-
 
 button3.addEventListener("click", (e)=>{
 	clearInterval(timerId);
@@ -86,44 +86,15 @@ button3.addEventListener("click", (e)=>{
 
 button4.addEventListener("click", (e)=>{
 	startGame()
-
 });
 
 
-function draw(){
-	for (let i = 0; i < currentDetail.length; i++) {
-		const element = currentDetail[i];
-		field[currentPosition + element].classList.add("detail")
-	}
-}
+document.addEventListener('keyup', controlList);
+
+document.addEventListener('keydown', controlListForKeyDown);
 
 
-
-////////////
-function drawNext(){
-	//CLEAR screen
-	nextScreen.forEach((element)=>{
-		element.classList.remove("detail");
-	});
-
-
-	let testDet = detailsForSmallScreen[nextDetailIndex];
-		
-	for (let i = 0; i < testDet.length; i++) {
-		const element = testDet[i];
-		nextScreen[element].classList.add("detail")
-	}
-}
-
-
-
-function clearDetail(){
-	currentDetail.forEach(element => {
-		field[currentPosition + element].classList.remove("detail")
-	});
-}
-
-function startGame(){
+export function startGame(){
 	timerId = setInterval(moveDown, currentSpeed);
 }
 
@@ -145,9 +116,7 @@ function moveDown(){
 	else
 		stopDetail();
 	
-	
 }
-
 
 
 function stopDetail(){
@@ -186,160 +155,15 @@ function makeDetailUnmovable(){
 		
 		isKeyDownPressed = false;//--to prevent fast falling down after new detail was appear
 		draw();
-		
-		// if(isSoftDropping){
-		// 	console.log(softDropCounter);
-		// 	addScore(softDropCounter);
-		// 	isSoftDropping = false;
-		// 	softDropCounter = 0;
-		// }
 		gameOver();
 		isPaused = false;
 	}
 	else{
 		isPaused = false;
-	}
-	
-	
-}
-
-function createNewRandomDetail(){
-		currentDetailPack = nextDetailPack;
-		nextDetailPack = details[randomNumOfDetail()];
-		
-		rotatePosition = 0;
-		currentDetail = currentDetailPack[rotatePosition];
-		
-
-
-}
-
-
-function rotate(){
-	if(checkRotation()){
-		
-		clearDetail()
-			if(rotatePosition === 3){
-				rotatePosition = 0;
-			}
-			else{rotatePosition++;};
-				
-			currentDetail = currentDetailPack[rotatePosition];
-			
-			draw();
-		
-		//check if there a free squares under detail after rotation and unpause
-		if(!checkGround(currentDetail) && isPaused){
-			
-			clearTimeout(setTimeOutID);
-			setTimeOutID = null;
-			isPaused = false;
-			
-		}
-		
-		
-	}
-
-}
-
-function checkRotation(){
-	//create a copy of detail to check future possible position
-	let rotationPosStub = rotatePosition;
-	let currentDetailStub = currentDetail;
-	
-	if(rotationPosStub === 3){
-		rotationPosStub = 0;
-	}
-	else{
-		rotationPosStub++;
 	}	
-	 currentDetailStub = currentDetailPack[rotationPosStub];
-
-	//check if two detail doesn't have common square and doest take two edges simultaneusly
-	if(isCurrentDetailGetOccupiedPlace(currentDetailStub) ||
-	 (isAtLeftEgde(currentDetailStub) && isAtRigthEdge(currentDetailStub))){
-		
-		return false;
-	 }
-	 else return true;
-
-
-}
-let isKeyDownPressed = false;
-
-//check what key was pressed and do action shoot when RELEASE key
-function controlList(event){
-	if(event.keyCode === 37	){
-		//moveLeft();
-		clearInterval(moveHorisontalLeftId);
-		moveHorisontalLeftId = null;
-	}
-	else if(event.keyCode === 39){
-		//moveRight();
-		clearInterval(moveHorisontalRightId);
-		moveHorisontalRightId = null;
-		
-	}
-	else if(event.keyCode === 38){
-		
-		isNewDetailAppear = false; //prevent breaking fastDown after rotation (dont remember why)
-		rotate();
-	}	
-	else if(event.keyCode === 40){
-		isKeyDownPressed = false;
-		isNewDetailAppear = false;
-		changeSpeed(baseSpeed)
-		//stop softdropping when release down button, clear softDrop score
-		isSoftDropping = false;
-		softDropCounter = 0;
-		console.log("key down release, is new detail", isNewDetailAppear);
-	}
-}
-//check what key was pressed and do action, shoot when PRESS key
-function controlListForKeyDown(event){
-	if(event.keyCode === 37	){
-		moveLeft();
-		if(moveHorisontalLeftId === null){ //preventing multiply SETINTERVAl
-			moveHorisontalLeftId = setInterval(moveLeft, 100);
-		}
-		
-	}
-	else if(event.keyCode === 39){
-		moveRight();
-		if(moveHorisontalRightId === null){//preventing multiply SETINTERVAl
-			moveHorisontalRightId = setInterval(moveRight, 100);
-		}
-		
-	}
-
-	if(event.keyCode === 40){
-		//console.log("key down press ", isNewDetailAppear);
-		if(!isNewDetailAppear && !isKeyDownPressed){
-			isKeyDownPressed = true;
-			isSoftDropping = true; //for counting greed of soft dropping
-			changeSpeed(40)
-		}
-		console.log("key down press, isSoftDropping ", isSoftDropping);
-	}
-}
-//add event listener to catch all keyUp
-document.addEventListener('keyup', controlList);
-
-document.addEventListener('keydown', controlListForKeyDown);
-
-function changeSpeed(newSpeed){
-	//console.log("set speed: ", newSpeed);
-	clearInterval(timerId);
-	currentSpeed = newSpeed;
-	startGame()
 }
 
 
-function randomNumOfDetail(){
-	let randomNum = Math.floor(Math.random() * details.length)
-	nextDetailIndex = randomNum; //for showing next detail in mini window
-	return  randomNum;
-}
 
 function checkFullRow(){
 	let rows = 0;
@@ -414,6 +238,7 @@ function speedCounter(){
 		else if(level >= 29)
 			baseSpeed = 16;
 	}
+
 	speedField.innerHTML = baseSpeed;
 }
 
@@ -436,63 +261,4 @@ function gameOver(){
 		console.log("finish");
 	}
 }
-
-function isCurrentDetailGetOccupiedPlace(detail){
-	return detail.some(element => field[currentPosition + element].classList.contains('ground'));
-}
-
-function isAtRigthEdge(detail){
-	return detail.some(element => (currentPosition + element + 1) % width === 0)
-}
-
-function isAtLeftEgde(detail){
-	return detail.some(element => (currentPosition + element) % width === 0)
-}
-
-function checkGround(detail){
-
-	if(detail.some(index => field[currentPosition + index + width].classList.contains('ground'))){
-		return true
-	}
-	else 
-		return false;
-}
-
-function moveLeft(){
-	clearDetail();
-	if(!isAtLeftEgde(currentDetail)){
-		currentPosition--;
-	}
-	if(isCurrentDetailGetOccupiedPlace(currentDetail)){
-		currentPosition++;
-	}
-	draw()
-	//check ground after moving and unpause if necessary
-	if(!checkGround(currentDetail) && isPaused){		
-		clearTimeout(setTimeOutID);
-		setTimeOutID = null;
-		isPaused = false;
-		
-	}
-}
-
-
-function moveRight(){
-	clearDetail()
-	if(!isAtRigthEdge(currentDetail)){
-		currentPosition++;
-	}
-	if(isCurrentDetailGetOccupiedPlace(currentDetail)){
-		currentPosition--;
-	}
-	draw()
-	//check ground after moving and unpause if necessary
-	if(!checkGround(currentDetail) && isPaused){	
-		clearTimeout(setTimeOutID);
-		setTimeOutID = null;
-		isPaused = false;
-		
-	}
-}
-//
 

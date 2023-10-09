@@ -1,7 +1,19 @@
-//!del after all
-import { field } from "./mainScript.js";
-const tableUl = document.querySelector(".score-table")
+import { startGame } from "./mainScript.js";
+import { details } from "./details.js";
 
+const tableUl = document.querySelector(".score-table")
+let nextScreen = Array.from(document.querySelectorAll('.nextDetailScreen div'));
+let nextDetailIndex = 0;
+let sScreenWidth = 4; //with for second screen with next detail
+let detailsForSmallScreen = [[0,1,2,sScreenWidth],
+							[0,1,2, sScreenWidth + 2],
+							[1,2,sScreenWidth, sScreenWidth+1],
+							[0,1, sScreenWidth + 1, sScreenWidth + 2],
+							[0,1,2, sScreenWidth+1],
+							[0,1,sScreenWidth, sScreenWidth+1],
+							[sScreenWidth,sScreenWidth+1,sScreenWidth+2,sScreenWidth+3]]
+
+//!del after all
 
 export function setFieldCoordinate(){
 	for (let i = 0; i < field.length; i++) {
@@ -45,4 +57,62 @@ export function showScoreTable(){
 	});
 	tableUl.innerHTML = list;
 
+}
+
+
+export function clearDetail(){
+	currentDetail.forEach(element => {
+		field[currentPosition + element].classList.remove("detail")
+	});
+}
+
+export function draw(){
+	for (let i = 0; i < currentDetail.length; i++) {
+		const element = currentDetail[i];
+		field[currentPosition + element].classList.add("detail")
+	}
+}
+
+export function checkGround(detail){
+
+	if(detail.some(index => field[currentPosition + index + width].classList.contains('ground'))){
+		return true
+	}
+	else 
+		return false;
+}
+
+export function changeSpeed(newSpeed){
+	clearInterval(timerId);
+	currentSpeed = newSpeed;
+	startGame()
+}
+//draw next deatil on additional screen
+export function drawNext(){
+	//CLEAR screen
+	nextScreen.forEach((element)=>{
+		element.classList.remove("detail");
+	});
+
+
+	let testDet = detailsForSmallScreen[nextDetailIndex];
+		
+	for (let i = 0; i < testDet.length; i++) {
+		const element = testDet[i];
+		nextScreen[element].classList.add("detail")
+	}
+}
+
+export function randomNumOfDetail(){
+	let randomNum = Math.floor(Math.random() * details.length)
+	nextDetailIndex = randomNum; //for showing next detail in mini window
+	return  randomNum;
+}
+
+export function createNewRandomDetail(){
+	currentDetailPack = nextDetailPack;
+	nextDetailPack = details[randomNumOfDetail()];
+	
+	rotatePosition = 0;
+	currentDetail = currentDetailPack[rotatePosition];
 }
