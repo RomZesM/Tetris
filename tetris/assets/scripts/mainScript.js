@@ -135,7 +135,7 @@ function stopDetail(){
 		
 		setTimeOutID = setTimeout(function(){ //pause before new detail to make move current detail on "ground"
 			makeDetailUnmovable();//add class GROUND to detail to stop it 
-		}, baseSpeed / 1.5); //Lock Delay for half a second or 30 frames
+		}, 300); //Lock Delay for half a second or 30 frames
 		
 	}
 

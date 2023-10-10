@@ -13,14 +13,14 @@ export function controlListForKeyDown(event){
 	if(event.keyCode === 37	){
 		moveLeft();
 		if(moveHorisontalLeftId === null){ //preventing multiply SETINTERVAl
-			moveHorisontalLeftId = setInterval(moveLeft, 100);
+			moveHorisontalLeftId = setInterval(moveLeft, 80);
 		}
 		
 	}
 	else if(event.keyCode === 39){
 		moveRight();
 		if(moveHorisontalRightId === null){//preventing multiply SETINTERVAl
-			moveHorisontalRightId = setInterval(moveRight, 100);
+			moveHorisontalRightId = setInterval(moveRight, 80);
 		}
 		
 	}

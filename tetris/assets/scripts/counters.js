@@ -45,8 +45,14 @@ export function speedCounter(){
 			baseSpeed -= 84;
 		else if(level === 9)
 			baseSpeed = 100;
-		else if(level > 9 && level < 29)
-			baseSpeed -= 17;
+		else if(level > 9 && level <= 12) //10-12
+			baseSpeed = 83;
+		else if(level > 12 && level <= 15) //13-15
+			baseSpeed = 66;
+		else if(level > 15 && level <= 18) //16-18
+			baseSpeed = 50;
+		else if(level > 18 && level <= 28) //19-28
+			baseSpeed = 33;
 		else if(level >= 29)
 			baseSpeed = 16;
 	}

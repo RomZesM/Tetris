@@ -164,7 +164,7 @@ export function getMiniScreens(){
 		let buf = commonArray.splice(0, 8);
 		screensArrays[i] = buf;
 	}
-	console.log(screensArrays);
+	//console.log(screensArrays);
 	return screensArrays;
 }	
 
