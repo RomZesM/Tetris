@@ -4,31 +4,32 @@
 }
 body{
 	font-family: 'Nintendo', serif;
+	margin-top: 20px;
+	background-image: url("/assets/img/wall_2.jpg");
 }
 
 .buttons{
 	display: flex;
+	justify-content: center;
 	gap: 10px;
 }
 
-.but1, .but2, .but3, .but4{
-	width: 50px;
-	height: 50px;
-	border: 2px solid black;
-}
 
 .start-button{
-	color: burlywood;
-	width: 100px;
-	height: 50px;
+	color: burlywood;	
 	border: 2px solid burlywood;
+	border-radius: 10px;
+	padding: 15px;
+	text-transform: capitalize;
 }
 
 .pause-button{
 	color: burlywood;
-	width: 100px;
-	height: 50px;
+	
+	
 	border: 2px solid burlywood;
+	border-radius: 10px;
+	padding: 15px;
 }
 
 .container{
@@ -47,8 +48,8 @@ body{
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	width: 900px;
-	height: 1040px;
+	width: 546px;
+	height: 1025px;
 
 	opacity: 1;
 	visibility: visible;
@@ -62,11 +63,11 @@ body{
 	transition: all 0.4s ease-in-out;
 }
 
-.start-button{
-	color: burlywood;
-	width: 100px;
-	height: 50px;
-	border: 2px solid burlywood;
+
+.left-info-block{
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
 }
 .detail-counter-monitor{
 	background-color: black;
@@ -74,12 +75,17 @@ body{
 	border: 5px solid #a6e5ff;
 	border-radius: 15px;
 	font-size: 20px;
-	padding: 10px;
+	padding: 33px;
 
 	padding-top: 40px;
 	display: flex;
 	flex-direction: column;
-	gap: 30px;
+	gap: 25px;
+}
+
+.statistics	{
+	letter-spacing: 2px;
+	text-transform: capitalize;
 }
 
 .detail-image{
@@ -133,21 +139,66 @@ body{
 	
 }
 
+.control-panel{
+
+	font-size: 20px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 10px;
+}
+
+.cp-block{
+	width: 265px;
+	background-color: black;
+	color:  burlywood;
+	border: 5px solid #a6e5ff;
+	border-radius: 15px;
+	padding: 15px;
+	
+}
+.next-detail-screen-block {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 25px;
+}
+
+
 .nextDetailScreen{
 	display: flex;
 	flex-wrap: wrap;
-	width: 208px;
-	height: 104px;
-	background-color: brown;
+	width: 212px;
+	height: 102px;
+	background-color: black;
+	margin-bottom: 20px;
+
+	
 }
 
 .nextDetailScreen div	{
 	
 	width: 50px;
 	height: 50px;
-	
-	
+		
 }
+
+.info-monitor{
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+}
+
+.score-table{
+	display: flex;
+	flex-direction: column;
+	font-size: 15px;
+	gap: 12px;
+}
+.score-table-title{
+	text-align: center;
+}
+
 
 .blue{
 	/* background-color: blue; */
