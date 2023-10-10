@@ -152,3 +152,44 @@ export function playShortSound(sound){
 	sound.currentTime = 0;
 	sound.play();
 }
+
+//draw mini details in statistics
+
+//make array with 7 separate screens
+export function getMiniScreens(){
+	let commonArray = Array.from(document.querySelectorAll('.detail-mini-screen div'));
+	let screensArrays = [];
+	
+	for (let i = 0; i < 7; i++) {
+		let buf = commonArray.splice(0, 8);
+		screensArrays[i] = buf;
+	}
+	console.log(screensArrays);
+	return screensArrays;
+}	
+
+export function drawDetailInStatisticsScreen(statMiniScreensArr){
+	//CLEAR screen
+	statMiniScreensArr.forEach((element)=>{
+		element.forEach((element)=>{
+			element.classList.remove("white", "blue", "light-blue");
+		});
+		
+	});
+	//drow details
+	for (let i = 0; i < statMiniScreensArr.length; i++) {
+		let mScreen = statMiniScreensArr[i];
+				
+		//detail for drawing
+		let testDet = detailsForSmallScreen[i];
+		//put detail into screen
+		for (let j = 0; j < testDet.length; j++) {
+				const drowinElement = testDet[j];
+				mScreen[drowinElement].classList.add(`${colorsList[i]}-mini`)
+			}
+	}
+
+	
+		
+	
+}

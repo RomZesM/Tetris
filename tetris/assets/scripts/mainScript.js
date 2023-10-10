@@ -11,7 +11,7 @@ import { changeSpeed } from "./utils.js";
 import { drawNext } from "./utils.js";
 import { randomNumOfDetail } from "./utils.js";
 import { createNewRandomDetail } from "./utils.js";
-import { clearRow, addScore } from "./utils.js";
+import { clearRow, addScore, drawDetailInStatisticsScreen, getMiniScreens } from "./utils.js";
 import {scoreCounter, speedCounter, linesCounter, showDetailsCounter} from "./counters.js"
 
 
@@ -72,6 +72,7 @@ createScoreTableInLocalStorage()
 showScoreTable();
 draw();
 drawNext();
+drawDetailInStatisticsScreen(getMiniScreens());
 
 pauseButton.addEventListener("click", (e)=>{
 	if(isPaused === false)

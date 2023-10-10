@@ -1,5 +1,10 @@
-
-
+@font-face {
+    font-family: Nintendo;
+    src: url("/assets/fonts/nintendo_font.otf") format("opentype");
+}
+body{
+	font-family: 'Nintendo', serif;
+}
 
 .buttons{
 	display: flex;
@@ -63,14 +68,54 @@
 	height: 50px;
 	border: 2px solid burlywood;
 }
+.detail-counter-monitor{
+	background-color: black;
+	color:  burlywood;
+	border: 5px solid #a6e5ff;
+	border-radius: 15px;
+	font-size: 20px;
+	padding: 10px;
+
+	padding-top: 40px;
+	display: flex;
+	flex-direction: column;
+	gap: 30px;
+}
+
+.detail-image{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 36px;
+}
+
+.detail-mini-screen{
+	display: flex;
+	width: 100px;
+	flex-wrap: wrap;
+
+}
+.detail-mini-screen div{ 
+	/* border: solid 1px white; */
+	width: 25px;
+	height: 25px;
+	
+}
+
+.stick_detail{
+	margin-top: 27px;
+}
+
 
 
 .glass{
 	display: flex;
 	flex-wrap: wrap;
-	width: 520px;
-	height: 1010px;
+	width: 540px;
+	height: 1025px;
 	background-color: black;
+	border: 10px solid #a6e5ff;
+	border-radius: 15px;
 	
 }
 
@@ -134,6 +179,39 @@
 	background-position: center;
 	background-size: 48px;
 	border-radius: 10px;
+
+}
+
+.blue-mini{
+	/* background-color: blue; */
+
+	background-image: url(/assets/img/blue_3.png);
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: 22px;
+	border-radius: 4px;
+
+}
+
+.light-blue-mini{
+	/* background-color: blue; */
+
+	background-image: url(/assets/img/light_blue_3.png);
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: 22px;
+	border-radius: 4px;
+
+}
+
+.white-mini{
+	/* background-color: blue; */
+
+	background-image: url(/assets/img/white_3.png);
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: 22px;
+	border-radius: 4px;
 
 }
 
