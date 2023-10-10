@@ -12,6 +12,8 @@ let detailsForSmallScreen = [[0,1,2,sScreenWidth],
 							[0,1,2, sScreenWidth+1],
 							[0,1,sScreenWidth, sScreenWidth+1],
 							[sScreenWidth,sScreenWidth+1,sScreenWidth+2,sScreenWidth+3]]
+let randomColorsList = ["detail", "detail2", "detail3"];
+let curretnColorIndex = 0;
 
 const scoreField = document.querySelector(".score")
 let score = 0;
@@ -64,14 +66,16 @@ export function showScoreTable(){
 
 export function clearDetail(){
 	currentDetail.forEach(element => {
-		field[currentPosition + element].classList.remove("detail")
+		//field[currentPosition + element].classList.remove("detail")
+		field[currentPosition + element].classList.remove("detail", "detail2", "detail3")
 	});
 }
 
 export function draw(){
 	for (let i = 0; i < currentDetail.length; i++) {
 		const element = currentDetail[i];
-		field[currentPosition + element].classList.add("detail")
+		console.log(randomColorsList[curretnColorIndex]);
+		field[currentPosition + element].classList.add(`${randomColorsList[curretnColorIndex]}`) //chode random color
 	}
 }
 
@@ -93,7 +97,7 @@ export function changeSpeed(newSpeed){
 export function drawNext(){
 	//CLEAR screen
 	nextScreen.forEach((element)=>{
-		element.classList.remove("detail");
+		element.classList.remove("detail", "detail2", "detail3");
 	});
 
 
@@ -101,13 +105,18 @@ export function drawNext(){
 		
 	for (let i = 0; i < testDet.length; i++) {
 		const element = testDet[i];
-		nextScreen[element].classList.add("detail")
+		nextScreen[element].classList.add(`${randomColorsList[curretnColorIndex]}`)
 	}
 }
 
 export function randomNumOfDetail(){
 	let randomNum = Math.floor(Math.random() * details.length)
 	//nextDetailIndex = randomNum; //for showing next detail in mini window
+	return  randomNum;
+}
+
+export function randomColorOfDetail(){
+	let randomNum = Math.floor(Math.random() * randomColorsList.length)
 	return  randomNum;
 }
 
@@ -119,13 +128,15 @@ export function createNewRandomDetail(){
 	countDetailsArr[randomInt]++;
 	rotatePosition = 0;
 	currentDetail = currentDetailPack[rotatePosition];
+	//make random color
+	curretnColorIndex = randomColorOfDetail();
 }
 
 //remove classes detail or ground from cell in glass
 export function clearRow(row){
 	row.forEach((element)=>{
 		field[element].classList.remove("ground");
-		field[element].classList.remove("detail");
+		field[element].classList.remove("detail", "detail2", "detail3");
 	});
 }
 

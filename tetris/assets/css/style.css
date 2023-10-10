@@ -1,3 +1,6 @@
+
+
+
 .buttons{
 	display: flex;
 	gap: 10px;
@@ -27,20 +30,19 @@
 	display: flex;
 	gap: 30px;
 	position: relative;
+	justify-content: center;
+	
 }
 
 .glass-overlay{
 	position: fixed;
 	z-index: 100;
-	left: 8px;
-	top: 8px;
-	right: 0;
-	bottom: 0;
+	
 	background-color: rgba(0,0,0, 0.5);
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	width: 520px;
+	width: 900px;
 	height: 1040px;
 
 	opacity: 1;
@@ -67,14 +69,21 @@
 	display: flex;
 	flex-wrap: wrap;
 	width: 520px;
-	height: 1040px;
-	background-color: brown;
+	height: 1010px;
+	background-color: black;
+	
 }
 
 .glass div	{
 	
 	width: 50px;
 	height: 50px;
+	/* border : burlywood solid 1px; */
+	
+}
+
+.glass div:nth-child(10n+1)	{
+	margin-left: 10px;
 	
 	
 }
@@ -96,6 +105,35 @@
 }
 
 .detail{
-	background-color: rgb(52, 165, 42);
+	/* background-color: blue; */
+
+	background-image: url(/assets/img/l_blue2.png);
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: 48px;
+	border-radius: 10px;
+
+}
+
+.detail2{
+	/* background-color: blue; */
+
+	background-image: url(/assets/img/blue2.png);
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: 48px;
+	border-radius: 10px;
+
+}
+
+.detail3{
+	/* background-color: blue; */
+
+	background-image: url(/assets/img/white2.png);
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: 48px;
+	border-radius: 10px;
+
 }
 
