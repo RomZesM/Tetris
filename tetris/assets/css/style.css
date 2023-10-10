@@ -1,11 +1,11 @@
 @font-face {
     font-family: Nintendo;
-    src: url("/assets/fonts/nintendo_font.otf") format("opentype");
+    src: url("/tetris/assets/fonts/nintendo_font.otf") format("opentype");
 }
 body{
 	font-family: 'Nintendo', serif;
 	margin-top: 20px;
-	background-image: url("/assets/img/wall_2.jpg");
+	background-image: url("/tetris/assets/img/wall_2.jpg");
 }
 
 .buttons{
@@ -203,7 +203,7 @@ body{
 .blue{
 	/* background-color: blue; */
 
-	background-image: url(/assets/img/blue_3.png);
+	background-image: url(/tetris/assets/img/blue_3.png);
 	background-repeat: no-repeat;
 	background-position: center;
 	background-size: 48px;
@@ -214,7 +214,7 @@ body{
 .light-blue{
 	/* background-color: blue; */
 
-	background-image: url(/assets/img/light_blue_3.png);
+	background-image: url(/tetris/assets/img/light_blue_3.png);
 	background-repeat: no-repeat;
 	background-position: center;
 	background-size: 48px;
@@ -225,7 +225,7 @@ body{
 .white{
 	/* background-color: blue; */
 
-	background-image: url(/assets/img/white_3.png);
+	background-image: url(/tetris/assets/img/white_3.png);
 	background-repeat: no-repeat;
 	background-position: center;
 	background-size: 48px;
@@ -236,7 +236,7 @@ body{
 .blue-mini{
 	/* background-color: blue; */
 
-	background-image: url(/assets/img/blue_3.png);
+	background-image: url(/tetris/assets/img/blue_3.png);
 	background-repeat: no-repeat;
 	background-position: center;
 	background-size: 22px;
@@ -247,7 +247,7 @@ body{
 .light-blue-mini{
 	/* background-color: blue; */
 
-	background-image: url(/assets/img/light_blue_3.png);
+	background-image: url(/tetris/assets/img/light_blue_3.png);
 	background-repeat: no-repeat;
 	background-position: center;
 	background-size: 22px;
@@ -258,7 +258,7 @@ body{
 .white-mini{
 	/* background-color: blue; */
 
-	background-image: url(/assets/img/white_3.png);
+	background-image: url(/tetris/assets/img/white_3.png);
 	background-repeat: no-repeat;
 	background-position: center;
 	background-size: 22px;
