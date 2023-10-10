@@ -104,10 +104,10 @@
 	
 }
 
-.detail{
+.blue{
 	/* background-color: blue; */
 
-	background-image: url(/assets/img/l_blue2.png);
+	background-image: url(/assets/img/blue_3.png);
 	background-repeat: no-repeat;
 	background-position: center;
 	background-size: 48px;
@@ -115,10 +115,10 @@
 
 }
 
-.detail2{
+.light-blue{
 	/* background-color: blue; */
 
-	background-image: url(/assets/img/blue2.png);
+	background-image: url(/assets/img/light_blue_3.png);
 	background-repeat: no-repeat;
 	background-position: center;
 	background-size: 48px;
@@ -126,10 +126,10 @@
 
 }
 
-.detail3{
+.white{
 	/* background-color: blue; */
 
-	background-image: url(/assets/img/white2.png);
+	background-image: url(/assets/img/white_3.png);
 	background-repeat: no-repeat;
 	background-position: center;
 	background-size: 48px;

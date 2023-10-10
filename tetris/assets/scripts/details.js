@@ -13,12 +13,12 @@ const ll_detail = [[0, 1, 2, width],
 				
 
 				
-const zl_detail = [[1 , 2,  width, width + 1],
+const zr_detail = [[1 , 2,  width, width + 1],
 				[1, width + 1,  width + 2, width * 2 + 2],
 				[width * 2, width * 2 + 1,  width * 1 + 1, width * 1 + 2],
 				[1, width + 1,  width + 2, width * 2 + 2]];
 
- const zr_detail = [[0, 1,  width + 1, width + 2],
+ const zl_detail = [[0, 1,  width + 1, width + 2],
 						[2, width + 1,  width * 1 + 2, width * 2 + 1],
 						[width, width + 1,  width * 2 + 1, width * 2 + 2],
 						[2, width + 1,  width * 1 + 2, width * 2 + 1]];		
@@ -38,7 +38,13 @@ const stick_detail =	[[0, 1, 2, 3],
 							[width * 2, width * 2 + 1,  width * 2 + 2, width * 2 + 3],
 							[2, width + 2,  width * 2 + 2, width * 3 + 2]];	
 
-export const details = [ll_detail, lr_detail, zl_detail, zr_detail, t_detail, cube_detail, stick_detail];
+export const details = [t_detail, 
+						lr_detail, 
+						zl_detail,
+						 cube_detail, 
+						  zr_detail, 
+						  ll_detail, 
+						  stick_detail];
 
 
 // function testdraw(det){

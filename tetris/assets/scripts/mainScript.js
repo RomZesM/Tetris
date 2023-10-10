@@ -59,9 +59,11 @@ field = Array.from(document.querySelectorAll('.glass div'));
 
 function createStartDetails(){
 	let randomDet = randomNumOfDetail();
+
 	countDetailsArr[randomDet] = Number.parseInt(countDetailsArr[randomDet]) + 1; //add detail into array for counting, then count while create random detail
 	showDetailsCounter();
 	nextDetailPack = details[randomDet]
+	nextDetailIndex = randomDet; //index for nex detail color
 	createNewRandomDetail();
 }
 

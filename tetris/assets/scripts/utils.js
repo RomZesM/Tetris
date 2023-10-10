@@ -3,16 +3,16 @@ import { details } from "./details.js";
 
 const tableUl = document.querySelector(".score-table")
 let nextScreen = Array.from(document.querySelectorAll('.nextDetailScreen div'));
-let nextDetailIndex = 0;
+//let nextDetailIndex = 0; make global
 let sScreenWidth = 4; //with for second screen with next detail
-let detailsForSmallScreen = [[0,1,2,sScreenWidth],
+let detailsForSmallScreen = [[0,1,2, sScreenWidth+1],
 							[0,1,2, sScreenWidth + 2],
-							[1,2,sScreenWidth, sScreenWidth+1],
 							[0,1, sScreenWidth + 1, sScreenWidth + 2],
-							[0,1,2, sScreenWidth+1],
 							[0,1,sScreenWidth, sScreenWidth+1],
+							[1,2,sScreenWidth, sScreenWidth+1],
+							[0,1,2,sScreenWidth],
 							[sScreenWidth,sScreenWidth+1,sScreenWidth+2,sScreenWidth+3]]
-let randomColorsList = ["detail", "detail2", "detail3"];
+let colorsList = ["white", "blue", "light-blue", "white", "blue", "light-blue", "white"];
 let curretnColorIndex = 0;
 
 const scoreField = document.querySelector(".score")
@@ -67,15 +67,15 @@ export function showScoreTable(){
 export function clearDetail(){
 	currentDetail.forEach(element => {
 		//field[currentPosition + element].classList.remove("detail")
-		field[currentPosition + element].classList.remove("detail", "detail2", "detail3")
+		field[currentPosition + element].classList.remove(`${colorsList[currentDetailIndex]}`)
 	});
 }
 
 export function draw(){
 	for (let i = 0; i < currentDetail.length; i++) {
 		const element = currentDetail[i];
-		console.log(randomColorsList[curretnColorIndex]);
-		field[currentPosition + element].classList.add(`${randomColorsList[curretnColorIndex]}`) //chode random color
+		//console.log(colorsList[curretnColorIndex]);
+		field[currentPosition + element].classList.add(`${colorsList[currentDetailIndex]}`) //chode random color
 	}
 }
 
@@ -97,7 +97,7 @@ export function changeSpeed(newSpeed){
 export function drawNext(){
 	//CLEAR screen
 	nextScreen.forEach((element)=>{
-		element.classList.remove("detail", "detail2", "detail3");
+		element.classList.remove("white", "blue", "light-blue");
 	});
 
 
@@ -105,7 +105,7 @@ export function drawNext(){
 		
 	for (let i = 0; i < testDet.length; i++) {
 		const element = testDet[i];
-		nextScreen[element].classList.add(`${randomColorsList[curretnColorIndex]}`)
+		nextScreen[element].classList.add(`${colorsList[nextDetailIndex]}`)
 	}
 }
 
@@ -115,28 +115,29 @@ export function randomNumOfDetail(){
 	return  randomNum;
 }
 
-export function randomColorOfDetail(){
-	let randomNum = Math.floor(Math.random() * randomColorsList.length)
-	return  randomNum;
-}
+// export function randomColorOfDetail(){
+// 	let randomNum = Math.floor(Math.random() * randomColorsList.length)
+// 	return  randomNum;
+// }
 
 export function createNewRandomDetail(){
 	currentDetailPack = nextDetailPack;
+	currentDetailIndex = nextDetailIndex; //for color of current detail
+	
 	let randomInt = randomNumOfDetail();
 	nextDetailIndex = randomInt; //for showing next detail in mini window
 	nextDetailPack = details[randomInt];
 	countDetailsArr[randomInt]++;
 	rotatePosition = 0;
 	currentDetail = currentDetailPack[rotatePosition];
-	//make random color
-	curretnColorIndex = randomColorOfDetail();
+	
 }
 
 //remove classes detail or ground from cell in glass
 export function clearRow(row){
 	row.forEach((element)=>{
 		field[element].classList.remove("ground");
-		field[element].classList.remove("detail", "detail2", "detail3");
+		field[element].classList.remove("white", "blue", "light-blue");
 	});
 }
 
