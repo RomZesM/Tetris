@@ -1,8 +1,13 @@
 
-import { clearDetail } from "./utils.js";
+import { clearDetail, playShortSound } from "./utils.js";
 import { draw } from "./utils.js";
 import { checkGround } from "./utils.js";
 import { changeSpeed } from "./utils.js";
+
+
+var moveSound = new Audio('./assets/audio/move2.mp3');
+var rotateSound = new Audio('./assets/audio/move.mp3');
+
 
 export function controlListForKeyDown(event){
 	if(event.keyCode === 37	){
@@ -70,12 +75,11 @@ function rotate(){
 			else{rotatePosition++;};
 				
 			currentDetail = currentDetailPack[rotatePosition];
-			
+			playShortSound(rotateSound)
 			draw();
 		
 		//check if there a free squares under detail after rotation and unpause
-		if(!checkGround(currentDetail) && isPaused){
-			
+		if(!checkGround(currentDetail) && isPaused){			
 			clearTimeout(setTimeOutID);
 			setTimeOutID = null;
 			isPaused = false;
@@ -116,11 +120,15 @@ function moveLeft(){
 	clearDetail();
 	if(!isAtLeftEgde(currentDetail)){
 		currentPosition--;
+		playShortSound(moveSound);
+	
 	}
 	if(isCurrentDetailGetOccupiedPlace(currentDetail)){
 		currentPosition++;
 	}
+	
 	draw()
+	
 	//check ground after moving and unpause if necessary
 	if(!checkGround(currentDetail) && isPaused){		
 		clearTimeout(setTimeOutID);
@@ -135,6 +143,7 @@ function moveRight(){
 	clearDetail()
 	if(!isAtRigthEdge(currentDetail)){
 		currentPosition++;
+		playShortSound(moveSound);
 	}
 	if(isCurrentDetailGetOccupiedPlace(currentDetail)){
 		currentPosition--;

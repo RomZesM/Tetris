@@ -133,3 +133,10 @@ export function addScore(amount){
 	score += amount;
 	scoreField.innerHTML = score;
 }
+
+export function playShortSound(sound){
+	sound.volume = 0.5;
+	sound.pause();
+	sound.currentTime = 0;
+	sound.play();
+}

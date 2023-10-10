@@ -1,4 +1,4 @@
-import { setScoreInScoreTableLocalstorage, showScoreTable } from "./utils.js";
+import { playShortSound, setScoreInScoreTableLocalstorage, showScoreTable } from "./utils.js";
 import { details } from "./details.js";
 import { createScoreTableInLocalStorage } from "./utils.js";
 import { controlList } from "./controls.js";
@@ -18,6 +18,10 @@ import {scoreCounter, speedCounter, linesCounter, showDetailsCounter} from "./co
 const glassOverlay = document.querySelector(".glass-overlay");
 const startButton = document.querySelector(".start-button")
 const pauseButton = document.querySelector(".pause-button")
+var downSound = new Audio('./assets/audio/down.mp3');
+var clearRowSound = new Audio('./assets/audio/cleanRow01.mp3');
+var gamoverSound = new Audio('./assets/audio/game_over.mp3');
+
 //
 
 
@@ -72,6 +76,7 @@ pauseButton.addEventListener("click", (e)=>{
 		isPaused = true
 	else
 		isPaused = false;
+	
 });
 
 startButton.addEventListener("click", (e)=>{
@@ -127,7 +132,7 @@ function stopDetail(){
 		
 		setTimeOutID = setTimeout(function(){ //pause before new detail to make move current detail on "ground"
 			makeDetailUnmovable();//add class GROUND to detail to stop it 
-		}, baseSpeed / 1.4); //Lock Delay for half a second or 30 frames
+		}, baseSpeed / 1.5); //Lock Delay for half a second or 30 frames
 		
 	}
 
@@ -138,7 +143,13 @@ function makeDetailUnmovable(){
 		currentDetail.forEach(element => { //draw figure on field with class ground
 		field[currentPosition + element].classList.add("ground")
 		});
-		checkFullRow();		
+		
+		if(checkFullRow() === 0){
+			playShortSound(downSound);
+		}
+		else {
+			playShortSound(clearRowSound);
+		}		
 		showDetailsCounter();//update detail counter screen
 		createNewRandomDetail()
 		drawNext();
@@ -182,6 +193,11 @@ function checkFullRow(){
 	linesCounter(rows); //lines is a global rows counter
 	speedCounter();
 	
+	if(rows > 0){ //for sound choosing
+		return 1
+	}
+	else return 0;
+
 }
 
 function gameOver(){	
@@ -196,8 +212,13 @@ function gameOver(){
 		showScoreTable();
 		isPaused = true;
 		glassOverlay.classList.remove("glass-overlay-hide")
+		playShortSound(gamoverSound);
 		console.log("finish");
-		location.reload();
+
+		setTimeout(function(){ //little pause for playing sound
+			location.reload();
+		}, 500);
+		
 	}
 }
 
