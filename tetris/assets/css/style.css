@@ -1,11 +1,11 @@
 @font-face {
     font-family: Nintendo;
-    src: url("/../tetris/assets/fonts/nintendo-font.otf") format("opentype");
+    src: url("./tetris/assets/fonts/nintendo-font.otf") format("opentype");
 }
 body{
 	font-family: 'Nintendo', serif;
 	margin-top: 20px;
-	background-image: url("/../tetris/assets/img/wall-2.jpg");
+	background-image: url("./tetris/assets/img/wall-2.jpg");
 }
 
 .buttons{
@@ -203,7 +203,7 @@ body{
 .blue{
 	/* background-color: blue; */
 
-	background-image: url("/../tetris/assets/img/blue-3.png");
+	background-image: url("./tetris/assets/img/blue-3.png");
 	background-repeat: no-repeat;
 	background-position: center;
 	background-size: 48px;
@@ -214,7 +214,7 @@ body{
 .light-blue{
 	/* background-color: blue; */
 
-	background-image: url("/../tetris/assets/img/light-blue-3.png");
+	background-image: url("tetris/assets/img/light-blue-3.png");
 	background-repeat: no-repeat;
 	background-position: center;
 	background-size: 48px;
