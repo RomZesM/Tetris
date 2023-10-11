@@ -3,6 +3,11 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16x16.png">
+	<link rel="manifest" href="assets/favicon/site.webmanifest">
+	
 	<link rel="stylesheet" href="assets/css/normalize.css">
 	<link rel="stylesheet" href="assets/css/style.css">
 	<title>Tetris</title>
@@ -11,7 +16,7 @@
 
 	<div class="container">
 		<div class="glass-overlay">
-			<div class="start-button">start</div>			
+			<div class="start-button button">start</div>			
 		</div>
 		<div class="left-info-block">
 			<div class="detail-counter-monitor">
@@ -344,10 +349,18 @@
 
 	<div class="control-panel">
 			
-		<div class="buttons cp-block">
-			<div class="pause-button">Pause</div>
-					
+		<div class="buttons-block cp-block">
+			<div class="left-button-block">
+				<div class="pause-button button"><span>Pause</span></div>
+			</div>
+			<div class="left-button-block">
+				<div class="stop-animation-button button">Stop animation</div>	
+				<div class="stop-sound-button button">Mute</div>			
+			</div>
+			
+			
 		</div>
+		
 		<div class="next-detail-screen-block cp-block">
 			<div class="next-detail-title">NEXT</div>
 			<div class="nextDetailScreen">
@@ -373,7 +386,11 @@
 			<div class="speed-title">Speed</div>
 			<div class="speed">0</div>
 		</div>
-		
+		<div class="animation-screen-block cp-block">
+			<div class="animation-screen">
+
+			</div>
+		</div>
 	
 	</div>
 
@@ -404,5 +421,8 @@
 	<script type="module" src="assets/scripts/mainScript.js"></script>
 	<script type="module" src="assets/scripts/utils.js"></script>
 	<script type="module" src="assets/scripts/details.js"></script>
+	<script type="module" src="assets/scripts/counters.js"></script>
+	<script type="module" src="assets/scripts/controls.js"></script>
+	<script type="module" src="assets/scripts/animation.js"></script>
 </body>
 </html>

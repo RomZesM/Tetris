@@ -8,29 +8,41 @@ body{
 	background-image: url("../img/wall-2.jpg");
 }
 
-.buttons{
+.buttons-block{
 	display: flex;
+	/* flex-direction: column; */
 	justify-content: center;
 	gap: 10px;
 }
 
+.left-button-block{
+	display: flex;
+	flex-direction: column;
+	gap: 7px;
+}
 
-.start-button{
+.button{
 	color: burlywood;	
 	border: 2px solid burlywood;
 	border-radius: 10px;
-	padding: 15px;
+	padding: 16px;
 	text-transform: capitalize;
+	text-align: center;
+	font-size: 10px;
+	cursor: pointer;
+}
+
+.button:hover{
+	transform: scale(1.05);
+	transition: all 0.1s ease-in;
 }
 
 .pause-button{
-	color: burlywood;
-	
-	
-	border: 2px solid burlywood;
-	border-radius: 10px;
-	padding: 15px;
+	height: 114px;
+	display: flex;
+	align-items: center;
 }
+
 
 .container{
 	display: flex;
@@ -189,6 +201,14 @@ body{
 	gap: 20px;
 }
 
+.score-title, .lines-title, .level-title, .speed-title{
+	text-align: center;
+}
+
+.score, .lines, .level, .speed{
+	text-align: right;
+}
+
 .score-table{
 	display: flex;
 	flex-direction: column;
@@ -214,7 +234,7 @@ body{
 .light-blue{
 	/* background-color: blue; */
 
-	background-image: url("../light-blue-3.png");
+	background-image: url("../img/light-blue-3.png");
 	background-repeat: no-repeat;
 	background-position: center;
 	background-size: 48px;
@@ -266,3 +286,35 @@ body{
 
 }
 
+.blue-micro, .light-blue-micro, .white-micro{
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: 30px;
+	border-radius: 1px;
+
+}
+.blue-micro{
+	background-image: url("../img/blue-3.png");
+}
+
+.light-blue-micro{
+	background-image: url("../img/light-blue-3.png");
+}
+
+.white-micro{
+	background-image: url("../img/white-3.png");
+}
+
+
+/* animation test */
+
+.animation-screen{
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.animation-screen div{
+	width: 15px;
+	height: 15px;
+	
+}

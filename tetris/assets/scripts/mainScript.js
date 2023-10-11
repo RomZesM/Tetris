@@ -13,7 +13,7 @@ import { randomNumOfDetail } from "./utils.js";
 import { createNewRandomDetail } from "./utils.js";
 import { clearRow, addScore, drawDetailInStatisticsScreen, getMiniScreens } from "./utils.js";
 import {scoreCounter, speedCounter, linesCounter, showDetailsCounter} from "./counters.js"
-
+import { drawAnimationScreen } from "./animation.js";
 
 const glassOverlay = document.querySelector(".glass-overlay");
 const startButton = document.querySelector(".start-button")
@@ -73,6 +73,8 @@ showScoreTable();
 draw();
 drawNext();
 drawDetailInStatisticsScreen(getMiniScreens());
+///test animation
+
 
 pauseButton.addEventListener("click", (e)=>{
 	if(isPaused === false)
@@ -111,9 +113,9 @@ function moveDown(){
 				softDropCounter++;				
 			}
 			draw();
-			//stopDetail();
 			//
-	}
+			drawAnimationScreen();
+		}
 	else
 		stopDetail();
 	

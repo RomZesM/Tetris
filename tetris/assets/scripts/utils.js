@@ -17,14 +17,16 @@ let curretnColorIndex = 0;
 
 const scoreField = document.querySelector(".score")
 let score = 0;
-//!del after all
 
-// export function setFieldCoordinate(){
-// 	for (let i = 0; i < field.length; i++) {
-// 		const element = field[i];
-// 		element.innerHTML = `${i}`;		
-// 	}
-// }
+let isMuted = false;
+
+//eventlistener for mute button
+document.querySelector(".stop-sound-button").addEventListener("click", (event)=>{
+	if(isMuted)
+		isMuted = false;
+	else
+	isMuted = true;
+});
 
 
 export function createScoreTableInLocalStorage(){
@@ -147,10 +149,13 @@ export function addScore(amount){
 }
 
 export function playShortSound(sound){
-	sound.volume = 0.5;
-	sound.pause();
-	sound.currentTime = 0;
-	sound.play();
+	if(!isMuted){
+		sound.volume = 0.5;
+		sound.pause();
+		sound.currentTime = 0;
+		sound.play();
+	}
+	
 }
 
 //draw mini details in statistics
