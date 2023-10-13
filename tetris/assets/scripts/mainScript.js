@@ -45,6 +45,9 @@ var gamoverSound = new Audio('./assets/audio/game_over.mp3');
 // let currentSpeed = baseSpeed; 
 //let softDropCounter = 0; //count lines during softdrop
 //let curentDetailIndex = 0;//for detail counter monitor
+//let lines = 0; -- lines dissapeared while playing
+//let level = 0; -- current level
+//let score = 0; -- current score
 
 //!set special event -> do it after page load
 const glass = document.querySelector(".glass")
@@ -73,10 +76,13 @@ showScoreTable();
 draw();
 drawNext();
 drawDetailInStatisticsScreen(getMiniScreens());
-///test animation
 
 
+//activate pause button
 pauseButton.addEventListener("click", (e)=>{
+	let testScrore = document.querySelector(".score")
+	console.log(testScrore.innerHTML);
+	
 	if(isPaused === false)
 		isPaused = true
 	else
@@ -84,6 +90,7 @@ pauseButton.addEventListener("click", (e)=>{
 	
 });
 
+//activate start button
 startButton.addEventListener("click", (e)=>{
 	glassOverlay.classList.add("glass-overlay-hide")
 	startGame()
@@ -216,14 +223,37 @@ function gameOver(){
 		setScoreInScoreTableLocalstorage()
 		showScoreTable();
 		isPaused = true;
-		glassOverlay.classList.remove("glass-overlay-hide")
-		playShortSound(gamoverSound);
+		//show gameOver screen
+		showGameOverScreen()
+		
 		console.log("finish");
 
-		setTimeout(function(){ //little pause for playing sound
-			location.reload();
-		}, 500);
+		// setTimeout(function(){ //little pause for playing sound
+		// 	location.reload();
+		// }, 500);
 		
 	}
+}
+
+
+const playAgainButton = document.querySelector(".play-again-button")
+
+//reload page to start the game
+playAgainButton.addEventListener('click', (event)=>{
+	 setTimeout(function(){ //little pause for playing sound
+			location.reload();
+		 }, 50);
+});
+
+function showGameOverScreen(){
+	glassOverlay.classList.remove("glass-overlay-hide")
+	playShortSound(gamoverSound);
+	document.querySelector(".score-final").innerHTML = score;
+	document.querySelector(".lines-final").innerHTML = lines;
+	document.querySelector(".level-final").innerHTML = level;
+
+	document.querySelector(".final-scores-screen").classList.add("show-final-scores");
+	playAgainButton.classList.add("play-again-button-show");
+	document.querySelector(".start-button").classList.add("start-button-hide");	
 }
 

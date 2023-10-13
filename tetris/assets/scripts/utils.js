@@ -16,7 +16,7 @@ let colorsList = ["white", "blue", "light-blue", "white", "blue", "light-blue", 
 let curretnColorIndex = 0;
 
 const scoreField = document.querySelector(".score")
-let score = 0;
+
 
 let isMuted = false;
 
@@ -43,7 +43,7 @@ export function setScoreInScoreTableLocalstorage(){ //change one field in userOb
 	//console.log(scoreTable, scoreTable.length);
 	if(scoreTable.length > 10){
 		scoreTable.splice(10);		
-		 console.log("scoreTable", scoreTable); 
+		// console.log("scoreTable", scoreTable); 
 	}	
 		
 	localStorage.setItem("scoreTable", JSON.stringify(scoreTable));

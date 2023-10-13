@@ -16,7 +16,18 @@
 
 	<div class="container">
 		<div class="glass-overlay">
-			<div class="start-button button">start</div>			
+			<div class="start-button button">start</div>
+			<div class="play-again-button button">Play again</div>
+			<div class="final-scores-screen">
+				<div class="final-txt">Your achievements for the game</div>
+				<div class="score-title">Score</div>
+				<div class="score-final">0</div>
+				<div class="lines-title">Lines</div>
+				<div class="lines-final">0</div>
+				<div class="level-title">Level</div>
+				<div class="level-final">0</div>
+			
+			</div>			
 		</div>
 		<div class="left-info-block">
 			<div class="detail-counter-monitor">
@@ -27,10 +38,10 @@
 						<div></div>
 						<div></div>
 						<div></div>
-						<div ></div>
-						<div ></div>
-						<div ></div>
-						<div ></div>
+						<div></div>
+						<div></div>
+						<div></div>
+						<div></div>
 						<div></div>
 					</div>
 					<div class="t_detail det-counter">0</div>
@@ -43,10 +54,10 @@
 						<div></div>
 						<div></div>
 						<div></div>
-						<div ></div>
-						<div ></div>
-						<div ></div>
-						<div ></div>
+						<div></div>
+						<div></div>
+						<div></div>
+						<div></div>
 						<div></div>
 					</div>
 					<div class="lr_detail det-counter">0</div>
@@ -417,6 +428,9 @@
 		let countDetailsArr = [];
 		let currentDetailIndex = 0;
 		let nextDetailIndex = 0;
+		let lines = 0;
+		let level = 0;
+		let score = 0;
 	  </script>
 	<script type="module" src="assets/scripts/mainScript.js"></script>
 	<script type="module" src="assets/scripts/utils.js"></script>

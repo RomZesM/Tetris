@@ -58,6 +58,8 @@ body{
 	
 	background-color: rgba(0,0,0, 0.5);
 	display: flex;
+	flex-direction: column;
+	gap: 20px;
 	align-items: center;
 	justify-content: center;
 	width: 546px;
@@ -74,6 +76,52 @@ body{
 	visibility: hidden;
 	transition: all 0.4s ease-in-out;
 }
+
+.final-scores-screen{
+	width: 265px;
+	background-color: black;
+	color:  burlywood;
+	border: 5px solid #a6e5ff;
+	border-radius: 15px;
+	padding: 15px;
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+
+	/* opacity: 0;
+	visibility: hidden; */
+	transition: all 0.4 ease-out;
+}
+
+.show-final-scores{
+	opacity: 1;
+	visibility: visible;
+	transition: all 0.4 ease-out;
+}
+.final-txt{
+	text-align: center;
+	margin-bottom: 10px;
+}
+.score-final,
+.lines-final,
+.level-final{
+	text-align: center;
+	color: #a6e5ff;
+}
+
+
+.start-button-hide{
+	display: none;
+}
+
+.play-again-button{
+	display: none;
+}
+
+.play-again-button-show{
+	display: block;
+}
+
 
 
 .left-info-block{

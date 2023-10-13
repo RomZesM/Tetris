@@ -4,9 +4,9 @@ const linesField = document.querySelector(".lines")
 const levelField = document.querySelector(".level")
 const speedField = document.querySelector(".speed")
 const detailsCountersFields = Array.from(document.querySelectorAll(".det-counter"));
-let lines = 0;
+
 let previousLevel = 0
-let level = 0;
+
 
 //count score dependin on lines was dissapiared and level
 export function scoreCounter(lines){
