@@ -21,6 +21,7 @@ body{
 	gap: 7px;
 }
 
+
 .button{
 	color: burlywood;	
 	border: 2px solid burlywood;
@@ -64,6 +65,7 @@ body{
 	justify-content: center;
 	width: 546px;
 	height: 1025px;
+	border-radius: 15px;
 
 	opacity: 1;
 	visibility: visible;
@@ -88,8 +90,8 @@ body{
 	flex-direction: column;
 	gap: 10px;
 
-	/* opacity: 0;
-	visibility: hidden; */
+	opacity: 0;
+	visibility: hidden;
 	transition: all 0.4 ease-out;
 }
 
@@ -267,6 +269,33 @@ body{
 	text-align: center;
 }
 
+footer{
+	border: sandybrown 2px solid;
+	display: flex;
+	background-color: black;
+	border: 10px solid #a6e5ff;
+	border-radius: 15px;
+	width: 1131px;
+	
+	display: flex;
+	justify-content: space-around;
+	margin: auto;
+	margin-top: 10px;
+	color:  burlywood;
+}
+
+.git img{
+	width: 60px;
+}
+.school img{
+	margin-top: 12px;
+	width: 100px;
+	background-color: burlywood;
+	border-radius: 5px;
+	padding: 5px;
+}
+
+/* -------colors-------- */
 
 .blue{
 	/* background-color: blue; */
