@@ -105,6 +105,7 @@ document.addEventListener('keydown', controlListForKeyDown);
 
 
 export function startGame(){
+	isPaused = false;
 	timerId = setInterval(moveDown, currentSpeed);
 }
 
