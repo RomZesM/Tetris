@@ -48,6 +48,7 @@ var gamoverSound = new Audio('./assets/audio/game_over.mp3');
 //let lines = 0; -- lines dissapeared while playing
 //let level = 0; -- current level
 //let score = 0; -- current score
+//let isGameOver = false; //flag for stop controls after gameOver
 
 //!set special event -> do it after page load
 const glass = document.querySelector(".glass")
@@ -80,9 +81,7 @@ drawDetailInStatisticsScreen(getMiniScreens());
 
 //activate pause button
 pauseButton.addEventListener("click", (e)=>{
-	let testScrore = document.querySelector(".score")
-	console.log(testScrore.innerHTML);
-	
+		
 	if(isPaused === false)
 		isPaused = true
 	else
@@ -111,7 +110,8 @@ export function startGame(){
 
 
 function moveDown(){
-	//console.log("is new det appear move down", isNewDetailAppear);
+	//console.log("move");
+
 	if(!isPaused && !checkGround(currentDetail)){ //check ground under detail to prevent moving just after rotetion
 		   
 			stopDetail();
@@ -132,6 +132,7 @@ function moveDown(){
 
 function stopDetail(){
 	//check 1 square under detail if it "ground"
+	console.log("check stop");
 	if(checkGround(currentDetail)){
 		isPaused = true;
 		isNewDetailAppear = true;//to prevent fast falling down after new detail was appear
@@ -141,12 +142,16 @@ function stopDetail(){
 			addScore(softDropCounter);
 			isSoftDropping = false;
 			softDropCounter = 0;
+			
 		}
+		console.log("setId before", setTimeOutID);
 		
-		setTimeOutID = setTimeout(function(){ //pause before new detail to make move current detail on "ground"
-			makeDetailUnmovable();//add class GROUND to detail to stop it 
-		}, 300); //Lock Delay for half a second or 30 frames
+			setTimeOutID = setTimeout(function(){ //pause before new detail to make move current detail on "ground"
+				makeDetailUnmovable();//add class GROUND to detail to stop it 
+			}, 100); //Lock Delay
+	
 		
+		console.log("setId after", setTimeOutID);
 	}
 
 }	
@@ -171,13 +176,19 @@ function makeDetailUnmovable(){
 		
 		changeSpeed(baseSpeed);		
 		
-		isKeyDownPressed = false;//--to prevent fast falling down after new detail was appear
+		//isKeyDownPressed = false;//--to prevent fast falling down after new detail was appear
 		draw();
 		gameOver();
 		isPaused = false;
+		
+		setTimeout(function(){ 
+			//isKeyDownPressed = false;
+			isNewDetailAppear = false;
+			}, 10);
 	}
 	else{
 		isPaused = false;
+		
 	}	
 }
 
@@ -216,14 +227,15 @@ function checkFullRow(){
 function gameOver(){	
 	if(isCurrentDetailGetOccupiedPlace(currentDetail)){
 		
-		clearInterval(timerId);
-		timerId = null;
+		clearInterval(timerId); //stop moving
+		timerId = null;//stop moving
 		currentDetail.forEach(element => { //draw figure on field with class ground
 			field[currentPosition + element].classList.add("ground")
 		});
 		setScoreInScoreTableLocalstorage()
 		showScoreTable();
 		isPaused = true;
+		isGameOver = true;
 		//show gameOver screen
 		showGameOverScreen()
 		
@@ -232,7 +244,7 @@ function gameOver(){
 		// setTimeout(function(){ //little pause for playing sound
 		// 	location.reload();
 		// }, 500);
-		
+		console.log("isPaused = ", isPaused);
 	}
 }
 

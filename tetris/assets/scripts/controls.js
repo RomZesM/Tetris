@@ -10,18 +10,20 @@ var rotateSound = new Audio('./assets/audio/move.mp3');
 
 
 export function controlListForKeyDown(event){
-	if(!isPaused){
-			if(event.keyCode === 37	){
-			moveLeft();
-			if(moveHorisontalLeftId === null){ //preventing multiply SETINTERVAl
-				moveHorisontalLeftId = setInterval(moveLeft, 80);
-			}
+	if(!isGameOver){
+		if(event.keyCode === 37	){
+			isKeyDownPressed = false;
+				moveLeft();
+				if(moveHorisontalLeftId === null){ //preventing multiply SETINTERVAl
+					moveHorisontalLeftId = setInterval(moveLeft, 100);
+				}
 			
 		}
 		else if(event.keyCode === 39){
+			isKeyDownPressed = false;
 			moveRight();
 			if(moveHorisontalRightId === null){//preventing multiply SETINTERVAl
-				moveHorisontalRightId = setInterval(moveRight, 80);
+				moveHorisontalRightId = setInterval(moveRight, 100);
 			}
 			
 		}
@@ -30,9 +32,10 @@ export function controlListForKeyDown(event){
 			if(!isNewDetailAppear && !isKeyDownPressed){
 				isKeyDownPressed = true;
 				isSoftDropping = true; //for counting greed of soft dropping
+				
 				changeSpeed(40)
 			}
-			
+		
 		}
 	}
 	
@@ -41,19 +44,20 @@ export function controlListForKeyDown(event){
 
 //check what key was pressed and do action shoot when RELEASE key
 export function controlList(event){
-	if(!isPaused){
+	if(!isGameOver){
 		if(event.keyCode === 37	){
-			//moveLeft();
+			isKeyDownPressed = false;
 			clearInterval(moveHorisontalLeftId);
 			moveHorisontalLeftId = null;
 		}
 		else if(event.keyCode === 39){
-			//moveRight();
+			isKeyDownPressed = false;
 			clearInterval(moveHorisontalRightId);
 			moveHorisontalRightId = null;
 			
 		}
 		else if(event.keyCode === 38){		
+			isKeyDownPressed = false;
 			isNewDetailAppear = false; //prevent breaking fastDown after rotation (dont remember why)
 			rotate();
 		}	
@@ -64,7 +68,6 @@ export function controlList(event){
 			//stop softdropping when release down button, clear softDrop score
 			isSoftDropping = false;
 			softDropCounter = 0;
-			//console.log("key down release, is new detail", isNewDetailAppear);
 		}
 	}
 	
@@ -89,6 +92,7 @@ function rotate(){
 			clearTimeout(setTimeOutID);
 			setTimeOutID = null;
 			isPaused = false;
+			
 			
 		}
 		
