@@ -82,6 +82,28 @@ body{
 	transition: all 0.4s ease-in-out;
 }
 
+.manual-screen{
+	width: 265px;
+	background-color: black;
+	color:  burlywood;
+	border: 5px solid burlywood;
+	burlywood;;
+	border-radius: 15px;
+	padding: 15px;
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	font-size: 15px;
+	text-align: center;
+}
+
+.manual-screen span{
+	font-size: 25px;	
+}
+.disclaimer{
+	text-align: left;
+}
+
 .final-scores-screen{
 	width: 265px;
 	background-color: black;
@@ -93,15 +115,17 @@ body{
 	flex-direction: column;
 	gap: 10px;
 
-	opacity: 0;
+	/* opacity: 0;
 	visibility: hidden;
-	transition: all 0.4 ease-out;
+	transition: all 0.4 ease-out; */
+	display: none;
 }
 
 .show-final-scores{
-	opacity: 1;
+	/* opacity: 1;
 	visibility: visible;
-	transition: all 0.4 ease-out;
+	transition: all 0.4 ease-out; */
+	display: block;
 }
 .final-txt{
 	text-align: center;
@@ -113,7 +137,9 @@ body{
 	text-align: center;
 	color: #a6e5ff;
 }
-
+.start-button{
+	font-size: 20px;
+}
 
 .start-button-hide{
 	display: none;
@@ -367,7 +393,7 @@ footer{
 	.glass {
 	  background-color: black;
 	  height: 722px;
-	  width: 388px;
+	  width: 380px;
 	}
 	.glass div	{
 	
@@ -376,6 +402,10 @@ footer{
 		/* border : burlywood solid 1px; */
 		
 	}
+	.glass div:nth-child(10n+1)	{
+		margin-left: 5px;	
+	}
+
 	.control-panel{
 		gap: 5px;
 	}
