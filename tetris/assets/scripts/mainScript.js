@@ -82,10 +82,16 @@ drawDetailInStatisticsScreen(getMiniScreens());
 //activate pause button
 pauseButton.addEventListener("click", (e)=>{
 		
-	if(isPaused === false)
+	if(isPaused === false){
 		isPaused = true
-	else
+		document.body.classList.remove("stop-scrolling"); //make scrolling availible
+	}
+		
+	else{
 		isPaused = false;
+		document.body.classList.add("stop-scrolling"); //make scrolling unavailible
+	}
+		
 	
 });
 
@@ -105,13 +111,14 @@ document.addEventListener('keydown', controlListForKeyDown);
 
 export function startGame(){
 	isPaused = false;
+	document.body.classList.add("stop-scrolling"); //make scrolling availible
 	timerId = setInterval(moveDown, currentSpeed);
 }
 
 
 function moveDown(){
 	//console.log("move");
-
+	
 	if(!isPaused && !checkGround(currentDetail)){ //check ground under detail to prevent moving just after rotetion
 		   
 			stopDetail();
@@ -123,6 +130,7 @@ function moveDown(){
 			draw();
 			//
 			drawAnimationScreen();
+			
 		}
 	else
 		stopDetail();
@@ -245,6 +253,7 @@ function gameOver(){
 		// 	location.reload();
 		// }, 500);
 		console.log("isPaused = ", isPaused);
+		document.body.classList.remove("stop-scrolling"); //make scrolling availible
 	}
 }
 

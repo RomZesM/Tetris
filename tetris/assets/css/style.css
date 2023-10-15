@@ -7,6 +7,9 @@ body{
 	margin-top: 20px;
 	background-image: url("../img/wall-2.jpg");
 }
+.stop-scrolling{
+	overflow: hidden;
+}
 
 .buttons-block{
 	display: flex;
@@ -313,6 +316,10 @@ footer{
 
 
 @media only screen and (max-height: 800px) {
+	body{
+		margin-top: 5px;
+	}
+	
 	.left-info-block{
 		gap: 5px;
 	}
