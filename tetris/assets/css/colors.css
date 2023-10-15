@@ -1,0 +1,70 @@
+/* -------colors-------- */
+
+
+
+.blue{
+	background-image: url("../img/blue-3.png");
+}
+
+.light-blue{
+	background-image: url("../img/light-blue-3.png");
+}
+
+.white{
+	background-image: url("../img/white-3.png");
+}
+
+.blue, .light-blue, .white{
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: 48px;
+	border-radius: 10px;
+
+}
+
+@media only screen and (max-height: 800px) {
+	.blue, .light-blue, .white{
+		background-size: 33px;
+		border-radius: 7px;
+	}
+}
+
+
+.blue-mini{
+	background-image: url("../img/blue-3.png");
+}
+
+.light-blue-mini{
+	background-image: url("../img/light-blue-3.png");
+}
+
+.white-mini{
+	background-image: url("../img/white-3.png");	
+}
+
+.blue-mini, .light-blue-mini, .white-mini{
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: 22px;
+	border-radius: 4px;
+}
+
+.blue-micro{
+	background-image: url("../img/blue-3.png");
+}
+
+.light-blue-micro{
+	background-image: url("../img/light-blue-3.png");
+}
+
+.white-micro{
+	background-image: url("../img/white-3.png");
+}
+
+.blue-micro, .light-blue-micro, .white-micro{
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: 30px;
+	border-radius: 1px;
+
+}

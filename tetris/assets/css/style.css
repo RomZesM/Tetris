@@ -187,6 +187,8 @@ body{
 	
 }
 
+	
+
 .glass div	{
 	
 	width: 50px;
@@ -196,9 +198,7 @@ body{
 }
 
 .glass div:nth-child(10n+1)	{
-	margin-left: 10px;
-	
-	
+	margin-left: 10px;	
 }
 
 .control-panel{
@@ -295,92 +295,7 @@ footer{
 	padding: 5px;
 }
 
-/* -------colors-------- */
 
-.blue{
-	/* background-color: blue; */
-
-	background-image: url("../img/blue-3.png");
-	background-repeat: no-repeat;
-	background-position: center;
-	background-size: 48px;
-	border-radius: 10px;
-
-}
-
-.light-blue{
-	/* background-color: blue; */
-
-	background-image: url("../img/light-blue-3.png");
-	background-repeat: no-repeat;
-	background-position: center;
-	background-size: 48px;
-	border-radius: 10px;
-
-}
-
-.white{
-	/* background-color: blue; */
-
-	background-image: url("../img/white-3.png");
-	background-repeat: no-repeat;
-	background-position: center;
-	background-size: 48px;
-	border-radius: 10px;
-
-}
-
-.blue-mini{
-	/* background-color: blue; */
-
-	background-image: url("../img/blue-3.png");
-	background-repeat: no-repeat;
-	background-position: center;
-	background-size: 22px;
-	border-radius: 4px;
-
-}
-
-.light-blue-mini{
-	/* background-color: blue; */
-
-	background-image: url("../img/light-blue-3.png");
-	background-repeat: no-repeat;
-	background-position: center;
-	background-size: 22px;
-	border-radius: 4px;
-
-}
-
-.white-mini{
-	/* background-color: blue; */
-
-	background-image: url("../img/white-3.png");
-	background-repeat: no-repeat;
-	background-position: center;
-	background-size: 22px;
-	border-radius: 4px;
-
-}
-
-.blue-micro, .light-blue-micro, .white-micro{
-	background-repeat: no-repeat;
-	background-position: center;
-	background-size: 30px;
-	border-radius: 1px;
-
-}
-.blue-micro{
-	background-image: url("../img/blue-3.png");
-}
-
-.light-blue-micro{
-	background-image: url("../img/light-blue-3.png");
-}
-
-.white-micro{
-	background-image: url("../img/white-3.png");
-}
 
 
 /* animation test */
@@ -394,4 +309,133 @@ footer{
 	width: 15px;
 	height: 15px;
 	
+}
+
+
+@media only screen and (max-height: 800px) {
+	.left-info-block{
+		gap: 5px;
+	}
+	.detail-counter-monitor{
+		font-size: 15px;
+		padding: 0px;
+		gap: 10px;
+	}
+
+	.detail-image{
+		gap: 25px;
+	}
+	.stick-screen{
+		padding-bottom: 15px;
+	}
+
+	.det-counter{
+		margin-top: 5px;
+	}
+	.statistics{
+		text-align: center;
+		padding-top: 10px;
+	}
+
+	.score-table{
+		font-size: 10px;
+		gap: 7px;
+		padding-left: 0;
+		align-items: center;
+		margin: 0;
+		margin-top:20px;
+	}
+	.score-table-title{
+		font-size: 15px;
+	}
+
+	.container{
+		gap: 10px;
+	}
+	.glass-overlay{
+		width: 388px;
+		height: 722px;
+	}
+
+	.glass {
+	  background-color: black;
+	  height: 722px;
+	  width: 388px;
+	}
+	.glass div	{
+	
+		width: 35px;
+		height: 35px;
+		/* border : burlywood solid 1px; */
+		
+	}
+	.control-panel{
+		gap: 5px;
+	}
+	.pause-button{
+		height: 100px;
+	}
+	.button{
+		padding: 13px;
+	}
+
+	.next-detail-screen-block{
+		gap: 10px;
+	}
+
+	.nextDetailScreen{
+		width: 170px;
+		height: 70px;
+		margin-bottom: 5px;
+
+	}
+	.next-detail-title{
+		font-size: 15px;
+	}
+
+	.nextDetailScreen div{
+		
+		width: 35px;
+		height: 35px;
+
+	}
+
+
+	.cp-block{
+		width: 240px;
+		padding: 10px;
+	}
+
+	.info-monitor{
+		font-size: 15px;
+		gap: 5px;
+	}
+	.animation-screen{
+		padding: 1px;
+		width: 222px;
+	}
+
+	.animation-screen div {
+		width: 14px;
+		height: 14px;
+		
+	}
+
+	footer{
+		width: 888px;
+		margin-top: 5px;
+		border: 5px solid #a6e5ff;
+	}
+
+	.year{
+		margin: 10px 0px;
+	}
+	.school img{
+		margin-top: 4px;
+		width: 80px;
+	}
+
+	.git img{
+		width: 40px;
+	}
 }
