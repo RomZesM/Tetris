@@ -1,4 +1,5 @@
 
+import { stopDetail } from "./mainScript.js";
 import { clearDetail, playShortSound } from "./utils.js";
 import { draw } from "./utils.js";
 import { checkGround } from "./utils.js";
@@ -144,6 +145,8 @@ function moveLeft(){
 		clearTimeout(setTimeOutID);
 		setTimeOutID = null;
 		isPaused = false;
+		//here start another check //!del
+		stopDetail();
 		
 	}
 }
@@ -164,6 +167,8 @@ function moveRight(){
 		clearTimeout(setTimeOutID);
 		setTimeOutID = null;
 		isPaused = false;
+		//here start another check //!del
+		stopDetail();
 		
 	}
 }

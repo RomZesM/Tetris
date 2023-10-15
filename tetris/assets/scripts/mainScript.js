@@ -139,33 +139,32 @@ function moveDown(){
 	
 }
 
+let startTime = 0;
+let finishTime = 0;
 
-function stopDetail(){
+export function stopDetail(){
 	//check 1 square under detail if it "ground"
-	console.log("check stop");
 	if(checkGround(currentDetail)){
 		isPaused = true;
 		isNewDetailAppear = true;//to prevent fast falling down after new detail was appear
 
 		if(isSoftDropping){
-			//console.log("softDrop", softDropCounter);//!del
+
 			addScore(softDropCounter);
 			isSoftDropping = false;
 			softDropCounter = 0;
 			
 		}
-		console.log("setId before", setTimeOutID);
-		
-			setTimeOutID = setTimeout(function(){ //pause before new detail to make move current detail on "ground"
+				
+		setTimeOutID = setTimeout(function(){ //pause before new detail to make move current detail on "ground"
+				
 				makeDetailUnmovable();//add class GROUND to detail to stop it 
-			}, 100); //Lock Delay
-	
-		
-		console.log("setId after", setTimeOutID);
-	}
+			}, 70); //Lock Delay
+		}
 
 }	
 function makeDetailUnmovable(){
+	//check once more after delay if is ground under detail, if yes - stop detail, if no - unpause an move down
 	if(isPaused && checkGround(currentDetail)){
 		//console.log("make unmovable", currentPosition);
 		currentDetail.forEach(element => { //draw figure on field with class ground
@@ -194,7 +193,7 @@ function makeDetailUnmovable(){
 		setTimeout(function(){ 
 			//isKeyDownPressed = false;
 			isNewDetailAppear = false;
-			}, 10);
+			}, 10);		
 	}
 	else{
 		isPaused = false;
