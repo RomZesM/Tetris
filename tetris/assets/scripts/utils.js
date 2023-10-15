@@ -28,6 +28,20 @@ document.querySelector(".stop-sound-button").addEventListener("click", (event)=>
 	isMuted = true;
 });
 
+export function fillMainScreen(){
+	for (let i = 0; i < 200; i++) {
+		const div_empty = document.createElement('div');
+		document.querySelector(".glass").append(div_empty)
+	}
+	for (let i = 0; i < 10; i++) {
+		const div_empty = document.createElement('div');
+		div_empty.classList.add("ground")
+		document.querySelector(".glass").append(div_empty)
+	}
+	
+	return Array.from(document.querySelectorAll('.glass div'));
+}
+
 
 export function createScoreTableInLocalStorage(){
 	if(localStorage.getItem("scoreTable") == null){

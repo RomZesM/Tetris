@@ -1,4 +1,4 @@
-import { playShortSound, setScoreInScoreTableLocalstorage, showScoreTable } from "./utils.js";
+import { fillMainScreen, playShortSound, setScoreInScoreTableLocalstorage, showScoreTable } from "./utils.js";
 import { details } from "./details.js";
 import { createScoreTableInLocalStorage } from "./utils.js";
 import { controlList } from "./controls.js";
@@ -16,6 +16,7 @@ import {scoreCounter, speedCounter, linesCounter, showDetailsCounter} from "./co
 import { drawAnimationScreen } from "./animation.js";
 
 const glassOverlay = document.querySelector(".glass-overlay");
+const manual = document.querySelector(".manual-screen");
 const startButton = document.querySelector(".start-button")
 const pauseButton = document.querySelector(".pause-button")
 var downSound = new Audio('./assets/audio/down.mp3');
@@ -58,7 +59,7 @@ createStartDetails();
 currentDetail = currentDetailPack[rotatePosition];
 
 currentPosition = 4;
-field = Array.from(document.querySelectorAll('.glass div'));
+field = fillMainScreen(); 
 
 
 function createStartDetails(){
@@ -97,7 +98,8 @@ pauseButton.addEventListener("click", (e)=>{
 
 //activate start button
 startButton.addEventListener("click", (e)=>{
-	glassOverlay.classList.add("glass-overlay-hide")
+	glassOverlay.classList.add("glass-overlay-hide") //gide modal window
+	manual.classList.add("manual-screen-hide");//hide manual from gameover screen in the end, appear after reload
 	startGame()
 });
 

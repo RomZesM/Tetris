@@ -87,7 +87,6 @@ body{
 	background-color: black;
 	color:  burlywood;
 	border: 5px solid burlywood;
-	burlywood;;
 	border-radius: 15px;
 	padding: 15px;
 	display: flex;
@@ -96,6 +95,10 @@ body{
 	font-size: 15px;
 	text-align: center;
 }
+.manual-screen-hide{
+	display: none;
+}
+
 
 .manual-screen span{
 	font-size: 25px;	
@@ -150,6 +153,7 @@ body{
 }
 
 .play-again-button-show{
+	background-color: black;
 	display: block;
 }
 
