@@ -112,6 +112,7 @@ document.addEventListener('keydown', controlListForKeyDown);
 
 
 export function startGame(){
+	isGameOver = false;
 	isPaused = false;
 	document.body.classList.add("stop-scrolling"); //make scrolling availible
 	timerId = setInterval(moveDown, currentSpeed);
@@ -263,9 +264,10 @@ const playAgainButton = document.querySelector(".play-again-button")
 
 //reload page to start the game
 playAgainButton.addEventListener('click', (event)=>{
-	 setTimeout(function(){ //little pause for playing sound
-			location.reload();
-		 }, 50);
+	//  setTimeout(function(){ //little pause for playing sound
+	// 		location.reload();
+	// 	 }, 50);
+	location.reload();
 });
 
 function showGameOverScreen(){
