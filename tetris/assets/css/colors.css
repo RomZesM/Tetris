@@ -22,7 +22,7 @@
 
 }
 
-@media only screen and (max-height: 800px) {
+@media only screen and (max-width: 768px) {
 	.blue, .light-blue, .white{
 		background-size: 33px;
 		border-radius: 7px;
