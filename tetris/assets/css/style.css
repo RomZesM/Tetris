@@ -4,7 +4,7 @@
 }
 body{
 	font-family: 'Nintendo', serif;
-	margin-top: 20px;
+	margin-top: 5px;
 	background-image: url("../img/wall-2.jpg");
 }
 .stop-scrolling{
@@ -66,8 +66,8 @@ body{
 	gap: 20px;
 	align-items: center;
 	justify-content: center;
-	width: 546px;
-	height: 1025px;
+	width: 466px;
+	height: 882px;
 	border-radius: 15px;
 
 	opacity: 1;
@@ -118,16 +118,12 @@ body{
 	flex-direction: column;
 	gap: 10px;
 
-	/* opacity: 0;
-	visibility: hidden;
-	transition: all 0.4 ease-out; */
+	
 	display: none;
 }
 
 .show-final-scores{
-	/* opacity: 1;
-	visibility: visible;
-	transition: all 0.4 ease-out; */
+
 	display: block;
 }
 .final-txt{
@@ -157,12 +153,10 @@ body{
 	display: block;
 }
 
-
-
 .left-info-block{
 	display: flex;
 	flex-direction: column;
-	gap: 10px;
+	gap: 5px;
 }
 .detail-counter-monitor{
 	background-color: black;
@@ -170,9 +164,9 @@ body{
 	border: 5px solid #a6e5ff;
 	border-radius: 15px;
 	font-size: 20px;
-	padding: 33px;
+	padding: 15px;
 
-	padding-top: 40px;
+	padding-top: 10px;
 	display: flex;
 	flex-direction: column;
 	gap: 25px;
@@ -181,6 +175,7 @@ body{
 .statistics	{
 	letter-spacing: 2px;
 	text-transform: capitalize;
+	text-align: center;
 }
 
 .detail-image{
@@ -212,8 +207,8 @@ body{
 .glass{
 	display: flex;
 	flex-wrap: wrap;
-	width: 540px;
-	height: 1025px;
+	width: 470px;
+	height: 882px;
 	background-color: black;
 	border: 10px solid #a6e5ff;
 	border-radius: 15px;
@@ -224,8 +219,8 @@ body{
 
 .glass div	{
 	
-	width: 50px;
-	height: 50px;
+	width: 43px;
+	height: 43px;
 	/* border : burlywood solid 1px; */
 	
 }
@@ -240,7 +235,7 @@ body{
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	gap: 10px;
+	gap: 5px;
 }
 
 .cp-block{
@@ -249,40 +244,46 @@ body{
 	color:  burlywood;
 	border: 5px solid #a6e5ff;
 	border-radius: 15px;
-	padding: 15px;
+	padding: 5px;
 	
 }
 .next-detail-screen-block {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	gap: 25px;
+	gap: 10px;
 }
 
 
 .nextDetailScreen{
 	display: flex;
 	flex-wrap: wrap;
-	width: 212px;
-	height: 102px;
+	width: 173px;
+	height: 85px;
 	background-color: black;
-	margin-bottom: 20px;
+	margin-bottom: 5px;
 
 	
 }
 
 .nextDetailScreen div	{
 	
-	width: 50px;
-	height: 50px;
+	width: 43px;
+	height: 43px;
 		
 }
 
 .info-monitor{
 	display: flex;
 	flex-direction: column;
-	gap: 20px;
+	gap: 18px;
 }
+.score-table-block{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
 
 .score-title, .lines-title, .level-title, .speed-title{
 	text-align: center;
@@ -293,10 +294,12 @@ body{
 }
 
 .score-table{
+	
 	display: flex;
 	flex-direction: column;
-	font-size: 15px;
-	gap: 12px;
+	font-size: 13px;
+	gap: 7px;
+	padding-inline-start: 15px;
 }
 .score-table-title{
 	text-align: center;
@@ -306,29 +309,33 @@ footer{
 	border: sandybrown 2px solid;
 	display: flex;
 	background-color: black;
-	border: 10px solid #a6e5ff;
+	border: 5px solid #a6e5ff;
 	border-radius: 15px;
-	width: 1131px;
+	width: 1000px;
 	
 	display: flex;
 	justify-content: space-around;
 	margin: auto;
-	margin-top: 10px;
+	margin-top: 5px;
 	color:  burlywood;
 }
+.year{
+	font-size: 10px;
+	margin: 0px;
+	margin-top: 5px;
+}
+
 
 .git img{
-	width: 60px;
+	width: 25px;
 }
 .school img{
-	margin-top: 12px;
-	width: 100px;
+	margin-top: 5px;
+	width: 40px;
 	background-color: burlywood;
 	border-radius: 5px;
 	padding: 5px;
 }
-
-
 
 
 /* animation test */
@@ -336,11 +343,14 @@ footer{
 .animation-screen{
 	display: flex;
 	flex-wrap: wrap;
+	width: 225px;
 }
 
 .animation-screen div{
 	width: 15px;
 	height: 15px;
+	/* border: 1px solid white; */
+
 	
 }
 

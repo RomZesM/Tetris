@@ -17,12 +17,12 @@
 .blue, .light-blue, .white{
 	background-repeat: no-repeat;
 	background-position: center;
-	background-size: 48px;
-	border-radius: 10px;
+	background-size: 41px;
+	border-radius: 8px;
 
 }
 
-@media only screen and (max-width: 768px) and (max-height: 750px) {
+@media only screen and (max-width: 768px) and (max-height: 800px) {
 	.blue, .light-blue, .white{
 		background-size: 28px;
 		border-radius: 7px;
