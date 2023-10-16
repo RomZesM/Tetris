@@ -140,7 +140,7 @@
 }
 
 
-@media only screen and (max-height: 710px) {
+@media only screen and (max-height: 750px) {
 	body{
 		margin-top: 5px;
 	}
