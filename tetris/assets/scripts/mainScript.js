@@ -121,7 +121,7 @@ export function startGame(){
 function moveDown(){
 	//console.log("move");
 	
-	if(!isPaused && !checkGround(currentDetail)){ //check ground under detail to prevent moving just after rotetion
+	if(!isPaused && !checkGround(currentDetail) && !isGameOver){ //check ground under detail to prevent moving just after rotetion
 		   
 			stopDetail();
 			clearDetail();
