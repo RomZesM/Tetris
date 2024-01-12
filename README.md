@@ -1,7 +1,5 @@
-# rsschool-cv
-repo for Rollign Scopes School (front-end cource)
+[Play Game] (https://romzesm.github.io/Tetris/tetris/)https://romzesm.github.io/Tetris/tetris/)
 
-https://RomZesM.github.io/rsschool-cv/cv
+I made a copy of Nintendo tetris on pure JS/CSS/HTML as a project during JS School frontend school
 
-https://RomZesM.github.io/rsschool-cv/
-
+All controls and rule was made as they was in original Nes tetris (I did the best i could)!
